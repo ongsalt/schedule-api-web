@@ -14,3 +14,35 @@ model Test {
     id   Int    @id @default(autoincrement())
     name String
 }
+
+model Teacher {
+    id       Int       @id @default(autoincrement())
+    name     String
+    subjects Subject[]
+}
+
+model Class {
+    id        Int        @id @default(autoincrement())
+    prefix    String
+    year      Int
+    room      Int
+    schedules Schedule[]
+}
+
+model Subject {
+    id        Int        @id @default(autoincrement())
+    code      String
+    name      String
+    teachers  Teacher[]
+    schedules Schedule[]
+}
+
+model Schedule {
+    id        Int     @id @default(autoincrement())
+    class     Class   @relation(fields: [classId], references: [id])
+    classId   Int
+    subject   Subject @relation(fields: [subjectId], references: [id])
+    subjectId Int
+    period    Int
+    day       Int
+}
