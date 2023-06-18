@@ -1,0 +1,37 @@
+:root {
+    --color-accent: #F5A524;
+    --color-accent100: #FEF5E7;
+    --color-accent300: #FCE7C5;
+    --color-accent500: #F9CB80;
+    --color-accent700: #B97509;
+    --color-accent-trans: #F5A5242a;
+
+    --color-text: #11181C;
+    --color-text-secondary: rgba(17, 24, 28, 0.5);
+
+    --color-bg: #ffffff;
+    --color-bg-trans: rgba(255, 255, 255, 0.64);
+    --color-border: rgba(0, 0, 0, 0.1);
+    --color-fg: #000;
+
+    --shadow0: 0px 2px 12px #00000010;
+    --shadow1: 0px 5px 15px #00000012;
+    --shadow2: 0px 4px 8px #00000010;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-accent: rgb(236, 81, 122);
+
+        --color-text: #bdbdbd;
+        --color-text-heading: #e3e3e3;
+        --color-text-secondary: #a9a9a9a0;
+
+        --color-bg: #111111;
+        --color-border: rgba(255, 255, 255, .1);
+
+        --shadow0: 0px 2px 12px #00000030;
+        --shadow1: 0px 5px 15px #00000045;
+        --shadow2: 0px 4px 8px #00000040;
+    }
+}

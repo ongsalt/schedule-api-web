@@ -1,42 +1,3 @@
-<template>
- <div class="grid gap-6">
-        <form>
-            <div class="grid gap-2">
-                <div class="grid gap-1">
-                    <label class="sr-only" htmlFor="email">
-                        Email
-                    </label>
-                    <Input id="email" placeholder="name@example.com" type="email" autoCapitalize="none" autoComplete="email"
-                        autoCorrect="off" disabled={isLoading} />
-                </div>
-                <Button disabled={isLoading}>
-                    {isLoading && (
-                    <LoadingIndicator class="mr-2 h-4 w-4" />
-                    )}
-                    Sign In with Email
-                </Button>
-            </div>
-        </form>
-        <div class="relative">
-            <div class="absolute inset-0 flex items-center">
-                <span class="w-full border-t" />
-            </div>
-            <div class="relative flex justify-center text-xs uppercase">
-                <span class="bg-background px-2 text-muted-foreground">
-                    Or continue with
-                </span>
-            </div>
-        </div>
-        <Button variant="outline" type="button" disabled={isLoading}>
-            {isLoading ? (
-            <LoadingIndicator class="mr-2 h-4 w-4" />
-            ) : (
-            <Icon id="github" class="mr-2 h-4 w-4" />
-            )}{" "}
-            Github
-        </Button>
-    </div>โ</template>
-
 <script setup lang="ts">
 definePageMeta({
     layout: 'auth',
@@ -45,8 +6,52 @@ definePageMeta({
         navigateAuthenticatedTo: '/',
     }
 })
-const { signIn } = useAuth()
+const { login } = useAuth()
 
-const onLogin = () => signIn('credentials', { username: 'test', password: 'hunter2' })
+const isLoading = ref(false)
+
+const username = ref("")
+const password = ref("")
+
+const errorMessage = ref("")
+
+const onLogin = async () => {
+    await login(username.value, password.value)
+}
 </script>
+        
+<template>
+    <div>
+        <h2> Log in </h2>
+        <p class="secondary">
+            New to this?
+            <NuxtLink to="/register" class="link">Sign up for an account</NuxtLink>.
+        </p>
+        <form @submit.prevent>
+            <div class="labeled">
+                <label for="username"> Username </label>
+                <input type="text" name="username" v-model="username">
+            </div>
+            <div class="labeled">
+                <label for="password"> Password </label>
+                <input type="password" name="password" v-model="password">
+            </div>
+            <p class="error"> {{ errorMessage }} </p>
+            <p class="info"> If you forgot your password please contact admin </p>
+            <LoadingAsyncButton :action="onLogin" title="Login" class="login-button" />
+        </form>
+    </div>
+</template>
+
+
+<style scoped>
+form {
+    margin-top: 24px;
+}
+
+.login-button {
+    display: flex;
+    width: 100%;
+}
+</style>
   
