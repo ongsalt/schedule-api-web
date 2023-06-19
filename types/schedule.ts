@@ -7,7 +7,8 @@ export const ZSchedule = z.object({
     subjectId: z.number(),
     subject: ZSubject,
     period: z.number(),
-    day: z.number()
+    day: z.number(),
+    room: z.string()
 })
 
 export type Schedule = z.infer<typeof ZSchedule>

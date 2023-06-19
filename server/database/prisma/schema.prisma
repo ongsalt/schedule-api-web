@@ -54,6 +54,7 @@ model Subject {
     id        Int        @id @default(autoincrement())
     code      String
     name      String
+    link      String?
     teachers  Teacher[]
     schedules Schedule[]
 }
@@ -66,4 +67,5 @@ model Schedule {
     subjectId Int
     period    Int
     day       Int
+    room      String?
 }

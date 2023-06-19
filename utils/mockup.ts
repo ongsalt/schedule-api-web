@@ -2,7 +2,7 @@ import { Schedule } from "~/types/schedule";
 
 const rng = (n = 1000) => Math.round(Math.random() * n)
 
-const getRandomSubject = (day: number, period: number) => {
+const getRandomSubject = (day: number, period: number): Schedule => {
     return {
         classId: rng(),
         day: day,
@@ -12,8 +12,13 @@ const getRandomSubject = (day: number, period: number) => {
         subject: {
             code: `ส${rng()}`,
             id: rng(),
-            name: `เสือก${rng()}`
-        }
+            name: `เสือก${rng()}`,
+            teacher: {
+                name: `ครู${rng()}`,
+                id: rng()
+            }
+        },
+        room: rng().toString()
     }
 }
 
