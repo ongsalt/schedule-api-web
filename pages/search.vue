@@ -3,32 +3,43 @@ const searchMode = 1
 </script>
 
 <template>
-  <section class="mb-32">
+  <section>
     <h1 class="mb-32 "> What you looking for? </h1>
     <div class="filter-list">
       <div class="filter">
-        <h2 class=""> Which class? </h2>
-        <h2 class="highlight"> M.6/5 </h2>
+        <h2 class=""> Which class?
+          <span class="highlight"> M.6/5 </span>
+        </h2>
       </div>
       <div class="filter">
-        <h2 class=""> In </h2>
-        <h2 class="highlight"> Wednesday </h2>
+        <h2 class=""> In
+          <span class="highlight"> Wednesday </span>
+
+        </h2>
       </div>
-      <!-- <div class="filter">
-        <h2 class=""> Period </h2>
-        <h2 class="highlight"> 8 </h2>
-      </div> -->
       <div class="filter">
-        <h2 class=""> Studying </h2>
-        <h2 class="highlight"> Science </h2>
+        <h2 class=""> Period
+          <span class="highlight"> 8 </span>
+
+        </h2>
+      </div>
+      <div class="filter">
+        <h2 class=""> At <span class="highlight"> 2305 </span>
+        </h2>
+      </div>
+      <div class="filter">
+        <h2 class=""> Studying <span class="highlight"> Science </span>
+        </h2>
       </div>
     </div>
     <button class="highlight add"> Add filter </button>
   </section>
+  <div class="divider small-screen"></div>
   <CardGrid>
     <ScheduleCard classroom="1210" teacher="Apasri" subject="Light and modern physics" mode="current" id="ว23102"
       meta="Wed • 1" />
-    <ScheduleCard classroom="42069" class-target="6/5" teacher="Yomum" subject="jhgyfueyguhi" mode="next" id="ค42069" meta="Wed • 2" />
+    <ScheduleCard classroom="42069" class-target="6/5" teacher="Yomum" subject="jhgyfueyguhi" mode="next" id="ค42069"
+      meta="Wed • 2" />
     <ScheduleCard classroom="177013" subject="jhgyfueyguhi" mode="free" id="ค42069" meta="Wed • 3" />
     <ScheduleCard classroom="2305" teacher="Kaoyum" subject="jhgyfueyguhi" mode="random" id="ค42069" meta="Wed • 4" />
     <ScheduleCard classroom="42069" subject="jhgyfueyguhi" mode="random" id="ค42069" meta="Wed • 5" />
@@ -72,5 +83,13 @@ const searchMode = 1
 .filter>h2 {
   padding-top: 2px;
   padding-bottom: 2px;
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  /* background-color: red; */
+  margin: 32px 0;
+  border-bottom: 1px solid var(--color-border);
 }
 </style>

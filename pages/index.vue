@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <section>
+  <section class="hero">
     <h4 class="mb-16"> M.6/5 </h4>
     <h1 class="mb-32"> It's been a long day </h1>
     <p class="secondary mb-32"> Trick: just skip the class  </p>
@@ -20,4 +20,8 @@
   </CardGrid>
 </template>
 
-<style scoped></style>
+<style scoped>
+.hero {
+  top: 35vh !important;
+}
+</style>

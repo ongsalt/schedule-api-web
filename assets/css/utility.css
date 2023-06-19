@@ -68,10 +68,3 @@
         display: none !important;
     }
 }
-
-.hero {
-    position: sticky;
-    top: 50vh;
-    translate: 0 -50%;
-    height: fit-content;
-}

@@ -10,8 +10,8 @@
 <style scoped>
 .parent>:first-child {
   position: sticky;
-  top: 50vh;
-  translate: 0 -50%;
+  top: 20vh;
+  /* bottom: 50vh; */
   height: fit-content;
 }
 

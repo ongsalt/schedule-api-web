@@ -31,11 +31,6 @@ model Session {
     @@index([userId])
 }
 
-model Test {
-    id   Int    @id @default(autoincrement())
-    name String
-}
-
 model Teacher {
     id       Int       @id @default(autoincrement())
     name     String
@@ -55,6 +50,7 @@ model Subject {
     code      String
     name      String
     link      String?
+    tags       String
     teachers  Teacher[]
     schedules Schedule[]
 }
