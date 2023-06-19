@@ -3,9 +3,10 @@
 </script>
 
 <template>
-    <div>
+    <div class="horizontal">
         <input type="text" placeholder="M.4/5">
-        <Icon id="home" />
+        <input type="text" placeholder="M.4/5">
+        <Icon id="search" />
     </div>
 </template>
 

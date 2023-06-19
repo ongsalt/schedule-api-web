@@ -1,6 +1,6 @@
 <template>
   <span class="icon" :style="{ fontSize: sizeString, color }" :class="props?.class">
-      {{ id }}
+    {{ id }}
   </span>
 </template>
 
@@ -17,18 +17,20 @@
   word-wrap: normal;
   direction: ltr;
   user-select: none;
+  height: fit-content;
 }
 </style>
 
 <script setup lang="ts">
-  const props = defineProps<{ size?: number | string, color?: string, id: string, class?: string }>()
-  const { size, color, id } = props
-  let sizeString: any; 
-  if (!sizeString) {
-    sizeString = `18px`
-  } else if (isNaN(size as any)) {
-      sizeString = size;
-  } else {
-      sizeString = `${size}px`
-  }
+const props = defineProps<{ size?: number | string, color?: string, id: string, class?: string }>()
+const { size, color, id } = props
+let sizeString: any;
+if (!size) {
+  sizeString = `18px`
+} else if (isNaN(size as any)) {
+  sizeString = size;
+} else {
+  sizeString = `${size}`
+}
+console.log(sizeString)
 </script>

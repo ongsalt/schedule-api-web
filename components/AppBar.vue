@@ -1,14 +1,34 @@
 <script setup lang="ts">
 
+const { y } = useWindowScroll()
+const isTop = computed(() => y.value > 0)
+
 </script>
 
 <template>
-    <nav>
+    <nav :class="{ collapse: isTop }">
         <div class="horizontal">
-            <img src="/favicon.ico" alt="Logo" class="logo">   
-            <h4> School schedule bot </h4>
+            <img src="/favicon.ico" alt="Logo" class="logo">
+            <h3> Yomum </h3>
         </div>
-        <ClassSelector />
+        <div class="center">
+            <NuxtLink href="/"> Home </NuxtLink>
+            <NuxtLink href="/"> Schedule </NuxtLink>
+            <NuxtLink href="/"> About </NuxtLink>
+        </div>
+        <div class="horizontal">
+            <NuxtLink href="/search">
+                <CircularIcon id="search" size="1.4rem" />
+            </NuxtLink>
+            <div class="small-screen horizontal">
+                <CircularIcon id="view_day" size="1.4rem" />
+                <CircularIcon id="info" size="1.4rem" />
+            </div>
+            <NuxtLink href="/settings">
+                <CircularIcon id="settings" size="1.4rem" />
+            </NuxtLink>
+        </div>
+        <NuxtLoadingIndicator />
     </nav>
 </template>
 
@@ -20,18 +40,58 @@
     background-color: transparent;
 }
 
-nav {
-    border-bottom: 1px solid var(--color-border);
+.center {
+    position: fixed;
+    left: 50vw;
+    width: fit-content;
+    translate: -50% 0;
+    right: 50vw;
     display: flex;
+    gap: 36px;
+    place-content: center;
+}
+
+.center>a {
+    color: var(--color-text);
+}
+
+.center>a:hover {
+    color: var(--color-accent700);
+}
+
+nav {
+    display: flex;
+    position: relative;
     justify-content: space-between;
     align-items: center;
-    padding: 0 18px;
+    padding: 12px 48px;
     gap: 12px;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background-color: var(--color-bg-trans);
+    z-index: 2;
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
     backdrop-filter: blur(4px);
+    transition: all .2s;
+    height: 54px;
+}
+
+nav.collapse {
+    /* padding: 0 48px; */
+    background-color: var(--color-bg-trans);
+    border-bottom: 1px solid var(--color-border);
+    /* backdrop-filter: none; */
+}
+
+@media screen and (max-width: 640px) {
+    .center {
+        display: none;
+    }
+
+    nav.collapse {
+        padding: 4px 24px;
+    }
 }
 </style>

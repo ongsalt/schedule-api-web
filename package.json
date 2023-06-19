@@ -17,6 +17,8 @@
     "@prisma/client": "^4.15.0",
     "@trpc/client": "^10.28.2",
     "@trpc/server": "^10.28.2",
+    "@vueuse/core": "^10.2.0",
+    "@vueuse/nuxt": "^10.2.0",
     "bcrypt": "^5.1.0",
     "prisma": "^4.15.0",
     "trpc-nuxt": "^0.10.5",
