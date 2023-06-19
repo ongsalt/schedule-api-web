@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const ZSubject = z.object({
+export const ZClass = z.object({
     id: z.number(),
     prefix: z.string(),
     year: z.number(),
@@ -8,4 +8,4 @@ export const ZSubject = z.object({
     scheduleIds: z.number().array(),
 })
 
-export type Subject = z.infer<typeof ZSubject>
+export type Class = z.infer<typeof ZClass>

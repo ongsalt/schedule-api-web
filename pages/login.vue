@@ -16,7 +16,12 @@ const password = ref("")
 const errorMessage = ref("")
 
 const onLogin = async () => {
-    await login(username.value, password.value)
+    errorMessage.value = ""
+    try {
+        await login(username.value, password.value)
+    } catch (e: any) {
+        errorMessage.value = e.data.message
+    }
 }
 </script>
         

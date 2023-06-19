@@ -26,7 +26,7 @@ export default defineEventHandler(async event => {
     if (!user) {
         throw createError({
             statusCode: 403,
-            statusMessage: "Invalid credential",
+            statusMessage: "Wrong username or password",
             data: {
                 isOk: false,
                 error: {
@@ -42,7 +42,7 @@ export default defineEventHandler(async event => {
     if (!isOk) {   
         throw createError({
             statusCode: 403,
-            statusMessage: "Invalid credential",
+            statusMessage: "Wrong username or password",
             data: {
                 isOk: false,
                 error: {

@@ -3,14 +3,29 @@
     color: var(--color-text-secondary);
 }
 
+.sub {
+    color: var(--color-accent700);
+    margin-bottom: 8px;
+}
+
 .info {
     margin-top: 12px;
     color: var(--color-text-secondary);
 }
 
+.error {
+    margin-top: 12px;
+    color: #F31260;
+}
+
 .mb-16 {
     margin-bottom: 16px;
 }
+
+.mb-32 {
+    margin-bottom: 32px;
+}
+
 
 .mt-16 {
     margin-top: 16px;
