@@ -31,12 +31,6 @@ const menuItems = ref([
         link: "/settings/time"
     },
     {
-        name: "Class",
-        icon: "Group",
-        isActive: false,
-        link: "/settings/class"
-    },
-    {
         name: "Subject",
         icon: "school",
         isActive: false,

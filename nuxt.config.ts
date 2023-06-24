@@ -3,6 +3,9 @@ export default defineNuxtConfig({
     modules: [
         '@vueuse/nuxt',
     ],
+    build: {
+        transpile: ['trpc-nuxt']
+    },
     css: ['~/assets/css/main.css', '~/assets/css/utility.css', '~/assets/css/colors.css'],
     app: {
         pageTransition: {

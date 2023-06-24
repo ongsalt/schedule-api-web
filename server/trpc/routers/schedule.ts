@@ -1,13 +1,46 @@
 import { z } from "zod"
+import { prisma } from "~/server/database/prisma/client"
 import { auth } from "~/server/trpc/middleware/auth"
 import { router, publicProcedure } from "~/server/trpc/trpc"
+import { prismaScheduleSelect } from "~/server/utils/transform"
+import { ZSchedule, ZScheduleFilter } from "~/types/schedule"
 import { ZTest } from "~/types/test"
 
 export const scheduleRouter = router({
-    new: publicProcedure.use(auth).input(ZTest).query(({ input }) => {
-        return `Hello ${input.name} at ${input.period}`
+    new: publicProcedure.use(auth).input(ZSchedule).query(({ input }) => {
+
     }),
-    get: publicProcedure.query(() => {
-        return "Dummy schedule"
+    list: publicProcedure.query(async () => {
+        return await prisma.schedule.findMany()
+    }),
+    search: publicProcedure.input(ZScheduleFilter).query(async  ({ input }) => {
+        const res = await prisma.schedule.findMany({
+            where: {
+                forYear: input.forYear,
+                forRoom: input.forRoom,
+                period: input.period,
+                day: input.day,
+                room: {
+                    contains: input.room
+                },
+                subject: {
+                    name: {
+                        contains: input.subjectName
+                    },
+                    code: {
+                        contains: input.subjectCode
+                    },
+                    teachers: {
+                        some: {
+                            name: input.teacherName
+                        }
+                    }
+                }       
+            },
+            select: prismaScheduleSelect
+        })
+
+
+        return res
     })
 })
