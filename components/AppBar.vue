@@ -7,22 +7,27 @@ const isTop = computed(() => y.value > 0)
 
 <template>
     <nav :class="{ collapse: isTop }">
-        <div class="horizontal">
-            <img src="/favicon.ico" alt="Logo" class="logo">
-            <h3> Yomum </h3>
-        </div>
+        <NuxtLink href="/">
+            <div class="horizontal">
+                <img src="/favicon.ico" alt="Logo" class="logo">
+                <h3 style="color: var(--color-text);"> Yomum </h3>
+            </div>
+        </NuxtLink>
         <div class="center">
             <NuxtLink href="/"> Home </NuxtLink>
             <NuxtLink href="/"> Schedule </NuxtLink>
-            <NuxtLink href="/"> About </NuxtLink>
+            <NuxtLink href="/about"> About </NuxtLink>
         </div>
         <div class="horizontal">
             <NuxtLink href="/search">
                 <CircularIcon id="search" size="1.4rem" />
             </NuxtLink>
             <div class="small-screen horizontal">
+
                 <CircularIcon id="view_day" size="1.4rem" />
-                <CircularIcon id="info" size="1.4rem" />
+                <NuxtLink href="/about">
+                    <CircularIcon id="info" size="1.4rem" />
+                </NuxtLink>
             </div>
             <NuxtLink href="/settings">
                 <CircularIcon id="settings" size="1.4rem" />
@@ -59,6 +64,8 @@ const isTop = computed(() => y.value > 0)
     color: var(--color-accent700);
 }
 
+
+
 nav {
     display: flex;
     position: relative;
@@ -69,13 +76,14 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+    width: 100lvw;
+    box-sizing: border-box;
     z-index: 2;
     background-color: transparent;
     border-bottom: 1px solid transparent;
     backdrop-filter: blur(4px);
-    transition: all .2s;
-    height: 54px;
+    transition: height .2s, padding .2s, background-color .2s, border-bottom .2s;
+    height: 96px;
 }
 
 nav.collapse {
@@ -91,6 +99,7 @@ nav.collapse {
     }
 
     nav.collapse {
+        height: 64px;
         padding: 4px 24px;
     }
 }

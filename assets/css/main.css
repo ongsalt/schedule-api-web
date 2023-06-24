@@ -4,6 +4,10 @@
   --ease3: cubic-bezier(.5, 0, .5, 1)
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body,
 html {
   padding: 0;

@@ -13,7 +13,6 @@ type PropsType = {
 }
 
 const { isShow, hide, color } = defineProps<PropsType>()
-
 </script>
 
 <style scoped>
