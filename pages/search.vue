@@ -8,7 +8,7 @@ const searchMode = 1
   <CommonContainer>
 
     <section>
-      <h1 class="mb-32 "> What you looking for? </h1>
+      <h1 class="mb-32 "> Search </h1>
       <div class="filter-list">
         <div class="filter">
           <h2 class=""> Which class?

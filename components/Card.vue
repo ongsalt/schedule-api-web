@@ -10,7 +10,7 @@
 
 <style scoped>
 .card {
-    background-color: var(--color-accent);
+    background-color: var(--color-bg);
     border-radius: 24px;
     padding: 18px 20px;
 }

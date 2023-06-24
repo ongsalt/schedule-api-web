@@ -15,7 +15,7 @@ import { Schedule } from '~/types/schedule';
 
 const { schedule } = defineProps<{ schedule?: Schedule }>()
 
-console.log(schedule)
+// console.log(schedule)
 
 const code = schedule?.subject.code
 const name = schedule?.subject.name

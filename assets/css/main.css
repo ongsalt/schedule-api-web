@@ -13,7 +13,7 @@ html {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  background-color: var(--color-bg);
+  background-color: var(--color-bg-immersive);
   color: var(--color-text);
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -88,6 +88,21 @@ textarea:focus {
   outline: 3px solid var(--color-accent-trans);
 }
 
+input.light {
+  border: none;
+  padding: 0;
+  padding-bottom: 4px;
+  margin: 8px;
+  border-radius: 0px;
+  border-bottom: 2px solid var(--color-border);
+  transition: border-bottom .2s;
+}
+
+input.light:focus {
+  outline: none;
+  border-bottom: 2px solid var(--color-accent);
+}
+
 
 button {
   -webkit-tap-highlight-color: transparent;
@@ -150,28 +165,4 @@ li {
   align-items: center;
   gap: 12px;
   padding: 0 12px;
-}
-
-.labeled {
-  margin-bottom: 8px;
-}
-
-.labeled label {
-  font-size: .9rem;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.labeled input {
-  width: 100%;
-}
-
-span.badge {
-  background-color: var(--color-accent-trans);
-  border-radius: 4px;
-  padding: 2px 4px;
-  margin: 0;
-  font-size: .8rem;
-  font-weight: 500;
-  color: var(--color-accent);
 }

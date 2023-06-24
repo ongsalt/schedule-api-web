@@ -32,5 +32,5 @@ if (!size) {
 } else {
   sizeString = `${size}`
 }
-console.log(sizeString)
+// console.log(sizeString)
 </script>

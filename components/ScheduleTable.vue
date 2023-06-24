@@ -8,7 +8,7 @@
                 </tr>
                 <tr>
                     <th> Time </th>
-                    <th v-for="a in period"> {{ a }} </th>
+                    <th v-for="a in period"> {{ formatRange(boundaries[a - 1]) }} </th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +24,8 @@
 <script setup lang="ts">
 import ScheduleCell from '~/components/ScheduleCell.vue';
 import { Schedule } from '~/types/schedule';
-import { days } from '~/utils/datetime'
+import { days, getTimeBoundary } from '~/utils/datetime'
+import { formatRange } from '~/utils/format'
 
 
 const timePerPeriod = 50 // Minutes
@@ -39,6 +40,7 @@ const period = schedules.reduce((previous, day) => {
 }, 0)
 
 const day = schedules.length
+const boundaries = getTimeBoundary(period, timePerPeriod)
 
 </script>
 

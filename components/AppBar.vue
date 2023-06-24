@@ -15,7 +15,7 @@ const isTop = computed(() => y.value > 0)
         </NuxtLink>
         <div class="center">
             <NuxtLink href="/"> Home </NuxtLink>
-            <NuxtLink href="/"> Schedule </NuxtLink>
+            <NuxtLink href="/schedule"> Schedule </NuxtLink>
             <NuxtLink href="/about"> About </NuxtLink>
         </div>
         <div class="horizontal">
@@ -29,7 +29,7 @@ const isTop = computed(() => y.value > 0)
                     <CircularIcon id="info" size="1.4rem" />
                 </NuxtLink>
             </div>
-            <NuxtLink href="/settings">
+            <NuxtLink href="/settings/time">
                 <CircularIcon id="settings" size="1.4rem" />
             </NuxtLink>
         </div>
