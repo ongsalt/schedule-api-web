@@ -3,12 +3,14 @@ import { prisma } from "~/server/database/prisma/client"
 import { auth } from "~/server/trpc/middleware/auth"
 import { router, publicProcedure } from "~/server/trpc/trpc"
 import { prismaScheduleSelect } from "~/server/utils/transform"
-import { ZSchedule, ZScheduleFilter } from "~/types/schedule"
+import { ZScheduleCreate, ZScheduleFilter } from "~/types/schedule"
 import { ZTest } from "~/types/test"
 
 export const scheduleRouter = router({
-    new: publicProcedure.use(auth).input(ZSchedule).query(({ input }) => {
-
+    new: publicProcedure.use(auth).input(ZScheduleCreate).query(async ({ input }) => {
+        return await prisma.schedule.create({
+            data: input
+        })
     }),
     list: publicProcedure.query(async () => {
         return await prisma.schedule.findMany()

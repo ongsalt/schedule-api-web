@@ -6,4 +6,9 @@ export const ZTeacher = z.object({
     subjectIds: z.number().array().optional()
 })
 
+export const ZTeacherCreate = z.object({
+    name: z.string(),
+})
+
+
 export type Teacher = z.infer<typeof ZTeacher>

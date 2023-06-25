@@ -3,6 +3,7 @@ import { publicProcedure, router } from '../trpc'
 import { scheduleRouter } from '~/server/trpc/routers/schedule'
 import { subjectRouter } from '~/server/trpc/routers/subject'
 import { taecherRouter } from '~/server/trpc/routers/teacher'
+import { ocrRouter } from '~/server/trpc/routers/ocr'
 
 export const appRouter = router({
   hello: publicProcedure
@@ -19,6 +20,7 @@ export const appRouter = router({
   schedule: scheduleRouter,
   subject: subjectRouter,
   teacher: taecherRouter,
+  ocr: ocrRouter,
 })
 
 // export type definition of API

@@ -10,4 +10,10 @@ export const ZSubject = z.object({
     scheduleIds: z.number().array().optional(),
 })
 
+export const ZSubjectCreate = z.object({
+    name: z.string(),
+    code: z.string(),
+    teacherIds: z.number().array().optional(),
+})
+
 export type Subject = z.infer<typeof ZSubject>

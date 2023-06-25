@@ -9,7 +9,16 @@ export const ZSchedule = z.object({
     subject: ZSubject,
     period: z.number(),
     day: z.number(),
-    room: z.string()
+    room: z.string().optional()
+})
+
+export const ZScheduleCreate = z.object({
+    forYear: z.number(),
+    forRoom: z.number(),
+    subjectId: z.number(),
+    period: z.number(),
+    day: z.number(),
+    room: z.string().optional()
 })
 
 export const ZScheduleFilter = z.object({
@@ -25,3 +34,4 @@ export const ZScheduleFilter = z.object({
 
 export type Schedule = z.infer<typeof ZSchedule>
 export type ScheduleFilter = z.infer<typeof ZScheduleFilter>
+export type ScheduleCreate = z.infer<typeof ZScheduleFilter>
