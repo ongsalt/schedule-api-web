@@ -67,8 +67,9 @@ nav {
     right: 0;
     /* width: 100lvw; */
     /* box-sizing: border-box; */
-    background-color: transparent;
+    background-color: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow0);
     height: 40px;
 }
 

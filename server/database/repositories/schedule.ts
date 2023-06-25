@@ -1,0 +1,48 @@
+import { Prisma } from "@prisma/client";
+import { prisma } from "~/server/database/prisma/client";
+import { ScheduleFilter } from "~/types/schedule";
+
+export async function getSchedulesByFilter(input: ScheduleFilter) {
+    const query: any = {}
+
+    if (input.forYear) query.forYear = input.forYear
+    if (input.forRoom) query.forRoom = input.forRoom
+    if (input.period) query.period = input.period
+    if (input.day) query.day = input.day
+    if (input.room) {
+        query.room = {
+            contains: input.room
+        }
+    }
+
+    if (input.subjectCode || input.subjectName || input.teacherName) {
+        query.subject = {}
+        if (input.subjectCode) query.subject.code = input.subjectCode
+        if (input.subjectName) query.subject.name = input.subjectName
+
+        if (input.teacherName) query.subject.teacher = input.subjectCode
+    }
+    return await prisma.schedule.findMany({
+        where: query,
+        select: {
+            day: true,
+            period: true,
+            forRoom: true,
+            forYear: true,
+            room: true,
+            subject: {
+                select: {
+                    name: true,
+                    code: true,
+                    link: true,
+                    tags: true,
+                    teachers: {
+                        select: {
+                            name: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+}

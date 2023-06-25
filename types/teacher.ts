@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 export const ZTeacher = z.object({
-    id: z.number(),
+    id: z.number().optional(),
     name: z.string(),
     subjectIds: z.number().array().optional()
 })

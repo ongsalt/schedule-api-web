@@ -48,6 +48,12 @@ const menuItems = ref([
         isActive: false,
         link: "/settings/user"
     },
+    {
+        name: "Developer",
+        icon: "construction",
+        isActive: false,
+        link: "/settings/developer"
+    },
 ])
 
 const route = useRoute()

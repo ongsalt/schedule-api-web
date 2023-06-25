@@ -17,6 +17,11 @@ watchEffect(() => {
       document.body.parentElement!.style.backgroundColor = "var(--color-bg)"
       document.body.parentElement!.style.scrollbarGutter = "auto"
     }
+  } else {
+    document.body.style.backgroundColor = "var(--color-bg-immersive)"
+    document.body.parentElement!.style.backgroundColor = "var(--color-bg-immersive)"
+    document.body.parentElement!.style.scrollbarGutter = "stable"
+
   }
 })
 

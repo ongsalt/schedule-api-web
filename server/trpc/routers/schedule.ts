@@ -1,5 +1,7 @@
 import { z } from "zod"
 import { prisma } from "~/server/database/prisma/client"
+import { getSchedulesByFilter } from "~/server/database/repositories/schedule"
+import { getCurrentPeriod, getRecommendation } from "~/server/service/schedule"
 import { auth } from "~/server/trpc/middleware/auth"
 import { router, publicProcedure } from "~/server/trpc/trpc"
 import { prismaScheduleSelect } from "~/server/utils/transform"
@@ -13,36 +15,18 @@ export const scheduleRouter = router({
         })
     }),
     list: publicProcedure.query(async () => {
-        return await prisma.schedule.findMany()
+        return await getSchedulesByFilter({})
     }),
     search: publicProcedure.input(ZScheduleFilter).query(async  ({ input }) => {
-        const res = await prisma.schedule.findMany({
-            where: {
-                forYear: input.forYear,
-                forRoom: input.forRoom,
-                period: input.period,
-                day: input.day,
-                room: {
-                    contains: input.room
-                },
-                subject: {
-                    name: {
-                        contains: input.subjectName
-                    },
-                    code: {
-                        contains: input.subjectCode
-                    },
-                    teachers: {
-                        some: {
-                            name: input.teacherName
-                        }
-                    }
-                }       
-            },
-            select: prismaScheduleSelect
-        })
-
-
-        return res
+        return await getSchedulesByFilter(input)
+    }),
+    getRecommend: publicProcedure.input(z.object({
+        forYear: z.number(),
+        forClass: z.number(),
+    })).query(async ({ input }) => {
+        return await getRecommendation(input.forYear, input.forClass)
+    }),
+    getCurrentPeriod: publicProcedure.query(() => {
+        return getCurrentPeriod()
     })
 })

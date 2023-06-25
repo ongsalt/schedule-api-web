@@ -4,21 +4,22 @@ const rng = (n = 1000) => Math.round(Math.random() * n)
 
 const getRandomSubject = (day: number, period: number): Schedule => {
     return {
-        classId: rng(),
+        forRoom: rng(10),
+        forYear: rng(10),
         day: day,
         period: period,
         id: rng(),
         subjectId: rng(),
         subject: {
-            code: `ส${rng()}`,
+            code: `ส${rng(39999)}`,
             id: rng(),
-            name: `เสือก${rng()}`,
+            name: `เสือก${rng(999)}`,
             teacher: {
-                name: `ครู${rng()}`,
+                name: `ครู${rng(99)}`,
                 id: rng()
             }
         },
-        room: rng().toString()
+        room: rng(9999).toString()
     }
 }
 
