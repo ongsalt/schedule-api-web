@@ -83,6 +83,12 @@ textarea {
   font-family: monospace;
 }
 
+input:hover,
+textarea:hover {
+  outline: 1px solid var(--color-accent-trans);
+}
+
+
 input:focus,
 textarea:focus {
   outline: 3px solid var(--color-accent-trans);
@@ -92,15 +98,30 @@ input.light {
   border: none;
   padding: 0;
   padding-bottom: 4px;
-  margin: 8px;
+  /* margin: 8px; */
   border-radius: 0px;
   border-bottom: 2px solid var(--color-border);
   transition: border-bottom .2s;
 }
 
+input.light:hover {
+  outline: none;
+  border-bottom: 2px solid var(--color-contrast);
+}
+
 input.light:focus {
   outline: none;
   border-bottom: 2px solid var(--color-accent);
+}
+
+input.inline {
+  border: 2px solid transparent;
+  margin: 0;
+  padding: 0;
+  display: inline;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
 }
 
 
