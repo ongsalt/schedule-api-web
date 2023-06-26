@@ -24,6 +24,8 @@ export const scheduleRouter = router({
         forYear: z.number(),
         forClass: z.number(),
     })).query(async ({ input }) => {
+        // return []
+        
         return await getRecommendation(input.forYear, input.forClass)
     }),
     getCurrentPeriod: publicProcedure.query(() => {

@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { PeriodLocation } from "~/types/period"
+import { ZPeriodLocation } from "~/types/period"
 import { ZSubject } from "~/types/subject"
 
 export const ZSchedule = z.object({
@@ -37,8 +37,9 @@ export const ZScheduleRecommendation = z.object({
     subjectName: z.string(),
     subjectCode: z.string(),
     teacherName: z.string(),
-    location: z.nativeEnum(PeriodLocation),
+    location: ZPeriodLocation,
     period: z.number(),
+    link: z.string().optional(),
     room: z.string().optional(),
 })
 
