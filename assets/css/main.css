@@ -1,11 +1,14 @@
 :root {
   --ease1: cubic-bezier(0.33, 1, 0.68, 1);
   --ease2: cubic-bezier(0.075, 0.82, 0.165, 1);
-  --ease3: cubic-bezier(.5, 0, .5, 1)
+  --ease3: cubic-bezier(.5, 0, .5, 1);
+  --ease-ios: cubic-bezier(.06, .61, .23, .98);
+  --ease-ios-first: cubic-bezier(.32, .64, .58, .78);
+  --ease-ios-last: cubic-bezier(.28, .67, .35, 1);
 }
 
 html {
-  scrollbar-gutter: stable;
+  /* scrollbar-gutter: stable; */
 }
 
 body,
@@ -115,7 +118,8 @@ input.light:focus {
 }
 
 input.inline {
-  border: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  width: 100%;
   margin: 0;
   padding: 0;
   display: inline;

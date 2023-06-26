@@ -24,7 +24,7 @@
     --color-fg: #000;
 
     --shadow0: 0px 4px 12px #00000010;
-    --shadow1: 0px 5px 15px #00000012;
+    --shadow1: 0px 8px 12px #00000015;
     --shadow2: 0px 4px 8px #00000010;
 }
 
@@ -40,7 +40,7 @@
         --color-border: rgba(255, 255, 255, .1);
 
         --shadow0: 0px 2px 12px #00000030;
-        --shadow1: 0px 5px 15px #00000045;
+        --shadow1: 0px 5px 15px #000000b5;
         --shadow2: 0px 4px 8px #00000040;
     }
 }

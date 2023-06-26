@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
     modules: [
         '@vueuse/nuxt',
+        'nuxt-headlessui'
     ],
     build: {
         transpile: ['trpc-nuxt']
@@ -10,8 +11,12 @@ export default defineNuxtConfig({
     app: {
         pageTransition: {
             name: 'page',
-            mode: 'in-out'
+            mode: 'out-in'
         },
+        // layoutTransition: {
+        //     name: 'slide',
+        //     mode: 'in-out'
+        // },
         head: {
             link: [
                 {
@@ -25,5 +30,9 @@ export default defineNuxtConfig({
                 }
             ]
         },
+    },
+    headlessui: {
+        prefix: 'Headless'
     }
+
 })

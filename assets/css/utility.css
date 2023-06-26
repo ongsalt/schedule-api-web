@@ -53,6 +53,10 @@
     padding: 36px !important;
 }
 
+.mr-16 {
+    margin-right: 16px;
+}
+
 .horizontal {
     display: flex;
     align-items: center;

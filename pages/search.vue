@@ -1,42 +1,66 @@
 <script lang="ts" setup>
-import CommonContainer from '~/components/CommonContainer.vue';
+import { ScheduleFilter } from '~/types/schedule';
 
-const searchMode = 1
+const text = ref("")
+const autocompletePopup = ref()
+
+// onMounted(() => {
+//   autocompletePopup.value.style.top = '0px'
+// })
+
+const filter: ScheduleFilter = ref({
+  
+})
+
+const print = (event: any) => console.log(event.target.innerText)
+
 </script>
 
 <template>
   <CommonContainer>
-
     <section>
       <h1 class="mb-32 "> Search </h1>
       <div class="filter-list">
-        <div class="filter">
-          <h2 class=""> Which class?
-            <span class="highlight"> M.6/5 </span>
+        <div class="filter" ref="filterClass">
+          <h2 class=""> Class
+            <span class="highlight" contenteditable @input="print"> M.6/5 </span>
           </h2>
+          <Icon size="1.4rem" id="delete" class="delete" />
         </div>
-        <div class="filter">
+        <div class="filter" ref="filterDay">
           <h2 class=""> In
-            <span class="highlight"> Wednesday </span>
-
+            <span class="highlight" contenteditable> Wednesday </span>
           </h2>
+          <Icon size="1.4rem" id="delete" class="delete" />
         </div>
-        <div class="filter">
+        <div class="filter" ref="filterPeriod">
           <h2 class=""> Period
-            <span class="highlight"> 8 </span>
-
+            <span class="highlight" contenteditable> 8 </span>
           </h2>
+          <Icon size="1.4rem" id="delete" class="delete" />
         </div>
-        <div class="filter">
-          <h2 class=""> At <span class="highlight"> 2305 </span>
+        <div class="filter" ref="filterRoom">
+          <h2 class=""> At
+            <span class="highlight" contenteditable> 2305 </span>
           </h2>
+          <Icon size="1.4rem" id="delete" class="delete" />
         </div>
-        <div class="filter">
-          <h2 class=""> Studying <span class="highlight"> Science </span>
+        <div class="filter" ref="filterSubjectName">
+          <h2 class=""> Studying
+            <span class="highlight" contenteditable> Science </span>
           </h2>
+          <Icon size="1.4rem" id="delete" class="delete" />
         </div>
       </div>
-      <button class="highlight add"> Add filter </button>
+      <button class="highlight add"> Add filter
+        <Icon id="keyboard_return" size="1.5rem" />
+      </button>
+      <!-- <div class="autocomplete" ref="autocompletePopup">
+        <li tabindex="1"> auto complete </li>
+        <li tabindex="1"> auto complete </li>
+        <li tabindex="1"> auto complete </li>
+        <li tabindex="1"> auto complete </li>
+      </div> -->
     </section>
     <div class="divider small-screen"></div>
     <CardGrid>
@@ -64,6 +88,19 @@ const searchMode = 1
   /* border: 1px solid var(--color-accent); */
 }
 
+.delete {
+  transition: all .3s;
+  color: transparent;
+}
+
+.delete:hover {
+  color: var(--color-text) !important;
+}
+
+.filter:hover .delete {
+  color: var(--color-contrast);
+}
+
 .add {
   opacity: .6;
   line-height: 1;
@@ -72,6 +109,7 @@ const searchMode = 1
   border: 3px solid var(--color-accent);
   border-style: dashed;
   transition: opacity .2s;
+  align-items: end;
   /* display: inline-block; */
 }
 
@@ -81,6 +119,7 @@ const searchMode = 1
 
 .filter {
   display: flex;
+  align-items: center;
   gap: 8px;
   margin-bottom: 16px;
 }
@@ -96,5 +135,46 @@ const searchMode = 1
   /* background-color: red; */
   margin: 32px 0;
   border-bottom: 1px solid var(--color-border);
+}
+
+input.highlight {
+  display: inline;
+  width: fit-content;
+  box-sizing: border-box;
+  max-width: 100%;
+  border: none;
+  font-weight: inherit;
+  outline: none;
+}
+
+.autocomplete {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  background-color: var(--color-bg);
+  overflow-y: hidden;
+  border: 1px solid var(--color-contrast);
+  box-shadow: var(--shadow0);
+  border-radius: 6px;
+}
+
+.autocomplete li {
+  margin: 2px;
+  border-radius: 4px;
+  padding: 2px 6px;
+  text-indent: 0;
+  list-style: none;
+}
+
+.autocomplete li:hover,
+.autocomplete li:focus {
+  background-color: var(--color-accent-trans);
+  color: var(--color-accent700);
+  outline: none;
+}
+
+.page-enter-from,
+.page-leave-to {
+  top: 0px;
 }
 </style>

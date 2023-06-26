@@ -3,14 +3,17 @@
 const { y } = useWindowScroll()
 const isTop = computed(() => y.value > 0)
 
+const isShow = ref(false) 
+
 </script>
 
 <template>
     <nav :class="{ collapse: isTop }">
+        <!-- <SearchPopup :is-show="isShow" :hide="() => isShow = false"/> -->
         <NuxtLink href="/">
             <div class="horizontal">
                 <img src="/favicon.ico" alt="Logo" class="logo">
-                <h3 style="color: var(--color-text);"> Yomum </h3>
+                <h3 style="color: var(--color-text);" class="app-title"> Yomum </h3>
             </div>
         </NuxtLink>
         <div class="center">
@@ -19,6 +22,9 @@ const isTop = computed(() => y.value > 0)
             <NuxtLink href="/about"> About </NuxtLink>
         </div>
         <div class="horizontal">
+            <!-- <NuxtLink href="#" @click="isShow = !isShow">
+                <CircularIcon id="crop_square" size="1.4rem" />
+            </NuxtLink> -->
             <NuxtLink href="/search">
                 <CircularIcon id="search" size="1.4rem" />
             </NuxtLink>
@@ -76,7 +82,7 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100lvw;
+    width: 100vw;
     box-sizing: border-box;
     z-index: 2;
     background-color: transparent;
@@ -98,9 +104,17 @@ nav.collapse {
         display: none;
     }
 
+    nav {
+        padding: 4px 24px;
+    }
     nav.collapse {
         height: 64px;
-        padding: 4px 24px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .app-title {
+        display: none;
     }
 }
 </style>

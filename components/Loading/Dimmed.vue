@@ -1,6 +1,7 @@
 <template>
     <Transition>
-        <div v-if="isShow" class="background" :style="{ backgroundColor: color }">
+        <div v-if="isShow" class="background" :style="{ backgroundColor: color }" @click="hide">
+            <slot />
         </div>
     </Transition>
 </template>
@@ -12,7 +13,25 @@ type PropsType = {
     color?: string
 }
 
-const { isShow, hide, color } = defineProps<PropsType>()
+const props = defineProps<PropsType>()
+
+const listener = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+        if (props.hide && props.isShow) {
+            console.log("Trigger hide using ESC")
+            props.hide()
+        }
+    }
+}
+
+watch(props, (it) => {
+    if (it.isShow) {
+        document.addEventListener('keyup', listener)
+    } else {
+        document.removeEventListener('keyup', listener)
+    }
+})
+
 </script>
 
 <style scoped>
@@ -25,5 +44,15 @@ const { isShow, hide, color } = defineProps<PropsType>()
     z-index: 999;
     transition: opacity .4s;
     background-color: rgba(0, 0, 0, 0.6);
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: opacity .3s;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
 }
 </style>

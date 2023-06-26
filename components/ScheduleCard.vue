@@ -1,7 +1,7 @@
 <template>
-    <Card class="sc-card" :class="mode">
+    <Card class="sc-card" :class="colorMode">
         <div class="horizontal h-space sc-top">
-            <Pill varient="outline" :light="mode === 'next'">
+            <Pill varient="outline" :light="colorMode === 'next'">
                 {{ meta ?? "Current" }}
             </Pill>
             <div>
@@ -10,9 +10,14 @@
             </div>
         </div>
         <div class="fill"></div>
-        <div class="anchor-bottom">
-            <p class="top subtext"> {{ id }} <span v-if="teacher"> • {{ teacher }} </span> </p>
-            <h2 class="mb-16"> {{ subject }} </h2>
+        <div class="anchor-bottom horizontal h-space ">
+            <div>
+                <p class="top subtext"> {{ id }} <span v-if="teacher"> • {{ teacher }} </span> </p>
+                <h2> {{ subject }} </h2>
+            </div>
+            <div v-if="link" :class="{ link: true, alwayShow: colorMode === 'current' }">
+                <Icon id="open_in_new" size="2rem" />
+            </div>
         </div>
         <!-- <img class="bg" src="" alt=""> -->
     </Card>
@@ -20,28 +25,29 @@
 
 <script setup lang="ts">
 
-type colorMode = "current" | "next" | "free" | "random"
+type ColorMode = "current" | "next" | "free" | "random" | "normal"
 
-const { subject, classroom, teacher, mode = "current", id, meta, classTarget } = defineProps<{
+
+const { subject, classroom, teacher, id, meta, classTarget } = defineProps<{
     subject: string,
     classroom: string,
     classTarget?: string,
     teacher?: string,
     id: string,
-    mode?: colorMode,
-    meta?: string
+    meta?: string | number,
+    link?: string
 }>()
 
-let modeString: string
+let colorMode: ColorMode = "normal"
 
-if (mode === "free") {
-    modeString = "Free"
-} else if (mode === "next") {
-    modeString = "Next"
-} else if (mode === "random") {
-    modeString = "Dafuq"
-} else {
-    modeString = "Current"
+if (meta === "free") {
+    colorMode = "free"
+} else if (meta === "Next") {
+    colorMode = "next"
+} else if (meta === "Random") {
+    colorMode = "random"
+} else if (meta === "Current") {
+    colorMode = "current"
 }
 
 </script>
@@ -55,6 +61,23 @@ if (mode === "free") {
     margin-bottom: 6px;
 }
 
+.anchor-bottom {
+    align-items: end;
+}
+
+.link {
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.sc-card:hover .link, .alwayShow {
+    opacity: .5;
+}
+
+.sc-card .link:hover {
+    opacity: 1;
+}
+
 .sc-card {
     position: relative;
     display: flex;
@@ -63,9 +86,22 @@ if (mode === "free") {
 }
 
 .current {
+    background: var(--color-accent300);
+    background: linear-gradient(325deg, var(--color-accent) 45%, var(--color-accent300) 100%);
+
     background-color: var(--color-accent);
     box-shadow: 0px 2px 8px var(--color-accent-trans);
+
+    grid-column: span 2;
+    height: 240px;
+    
     transition: all .3s;
+}
+
+@media screen and (max-width: 640px) {
+    .current {
+        grid-column: auto;
+    }
 }
 
 .current:hover {
@@ -77,7 +113,14 @@ if (mode === "free") {
 }
 
 .random {
-    background-color: var(--color-surface);
+    background: #D3CCE3;
+    background: linear-gradient(100deg, #E9E4F0, #D3CCE3);
+    /* background-color: var(--color-surface); */
+}
+
+.normal {
+    background-color: var(--color-accent-trans);
+    /* color: var(--color-accent700); */
 }
 
 .next {
