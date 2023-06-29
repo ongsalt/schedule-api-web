@@ -6,9 +6,9 @@ export const ZSubject = z.object({
     name: z.string(),
     code: z.string(),
     teacherIds: z.number().array().optional(),
-    teacher: ZTeacher.array(),
-    link: z.string(),
-    tags: z.string(),
+    teachers: ZTeacher.array(),
+    link: z.string().nullable(),
+    tags: z.string().nullable(),
     scheduleIds: z.number().array().optional(),
 })
 

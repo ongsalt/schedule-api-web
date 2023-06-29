@@ -17,7 +17,7 @@
   padding: 12px 42px;
   display: grid;
   min-height: calc(100vh - 120px);
-  grid-template-columns: 440px 1fr;
+  grid-template-columns: 400px 1fr;
   gap: 64px;
 }
 

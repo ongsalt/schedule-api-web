@@ -92,8 +92,6 @@ export async function getRecommendation(forYear: number, forClass: number): Prom
 
     const period = getCurrentPeriod()
 
-    console.log(period)
-
     // const p = await getSchedulesByFilter({
     //     forYear: forYear,
     //     forRoom: forClass,

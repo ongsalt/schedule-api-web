@@ -6,11 +6,11 @@ export const ZSchedule = z.object({
     id: z.number().optional(),
     forYear: z.number(),
     forRoom: z.number(),
-    subjectId: z.number().optional(),
+    room: z.string().optional().nullable(),
     subject: ZSubject,
+    subjectId: z.number().optional(),
     period: z.number(),
     day: z.number(),
-    room: z.string().optional()
 })
 
 export const ZScheduleCreate = z.object({
@@ -30,7 +30,10 @@ export const ZScheduleFilter = z.object({
     teacherName: z.string().optional(),
     period: z.number().optional(),
     day: z.number().optional(),
-    room: z.string().optional()
+    room: z.string().optional(),
+    // For pagination
+    start: z.number().default(0),
+    take: z.number().default(20)
 })
 
 export const ZScheduleRecommendation = z.object({

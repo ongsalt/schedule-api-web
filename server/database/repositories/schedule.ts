@@ -43,7 +43,9 @@ export async function getSchedulesByFilter(input: ScheduleFilter) {
                     }
                 }
             }
-        }
+        },
+        take: input.take,
+        skip: input.start
     })
 }
 

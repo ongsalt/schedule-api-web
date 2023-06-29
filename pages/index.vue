@@ -53,7 +53,7 @@ const onUpdateClassTarget = async () => {
     </section>
     <CardGrid>
       <ScheduleCard v-for="s in schedules" :classroom="s.room ?? ''" :teacher="s.teacherName" :subject="s.subjectName"
-        :id="s.subjectCode" :meta="s.location" />
+        :id="s.subjectCode" :meta="s.location" :large="s.location === 'Current'"/>
       <RecommendCard color-mode="vibrant"/>
     </CardGrid>
   </CommonContainer>

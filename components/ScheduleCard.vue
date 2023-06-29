@@ -1,5 +1,5 @@
 <template>
-    <Card class="sc-card" :class="colorMode">
+    <Card class="sc-card" :class="[colorMode, { large }]">
         <div class="horizontal h-space sc-top">
             <Pill varient="outline" :light="colorMode === 'next'">
                 {{ meta ?? "Current" }}
@@ -28,26 +28,32 @@
 type ColorMode = "current" | "next" | "free" | "random" | "normal"
 
 
-const { subject, classroom, teacher, id, meta, classTarget } = defineProps<{
+const { subject, classroom, teacher, id, meta, classTarget, mode } = defineProps<{
     subject: string,
     classroom: string,
     classTarget?: string,
     teacher?: string,
     id: string,
+    large?: boolean,
     meta?: string | number,
+    mode?: ColorMode,
     link?: string
 }>()
 
 let colorMode: ColorMode = "normal"
 
-if (meta === "free") {
-    colorMode = "free"
-} else if (meta === "Next") {
-    colorMode = "next"
-} else if (meta === "Random") {
-    colorMode = "random"
-} else if (meta === "Current") {
-    colorMode = "current"
+if (!mode) {
+    if (meta === "free") {
+        colorMode = "free"
+    } else if (meta === "Next") {
+        colorMode = "next"
+    } else if (meta === "Random") {
+        colorMode = "random"
+    } else if (meta === "Current") {
+        colorMode = "current"
+    }
+} else {
+    colorMode = mode
 }
 
 </script>
@@ -70,7 +76,8 @@ if (meta === "free") {
     transition: opacity .3s;
 }
 
-.sc-card:hover .link, .alwayShow {
+.sc-card:hover .link,
+.alwayShow {
     opacity: .5;
 }
 
@@ -85,24 +92,24 @@ if (meta === "free") {
     justify-content: space-between;
 }
 
+.large {
+    grid-column: span 2;
+    height: 240px;
+}
+
 .current {
     background: var(--color-accent300);
     background: linear-gradient(325deg, var(--color-accent) 45%, var(--color-accent300) 100%);
 
     background-color: var(--color-accent);
     box-shadow: 0px 2px 8px var(--color-accent-trans);
-
-    grid-column: span 2;
-    height: 240px;
-    
     transition: all .3s;
 }
 
-@media screen and (max-width: 640px) {
-    .current {
-        grid-column: auto;
-    }
+.current * {
+    color: black;
 }
+
 
 .current:hover {
     box-shadow: 0px 6px 16px var(--color-accent-trans);
@@ -112,6 +119,12 @@ if (meta === "free") {
     background-color: var(--color-blue500);
 }
 
+@media screen and (max-width: 640px) {
+    .current {
+        grid-column: auto;
+    }
+}
+
 .random {
     background: #D3CCE3;
     background: linear-gradient(100deg, #E9E4F0, #D3CCE3);
@@ -119,14 +132,14 @@ if (meta === "free") {
 }
 
 .normal {
-    background-color: var(--color-accent-trans);
+    background-color: var(--color-surface);
     /* color: var(--color-accent700); */
 }
 
 .next {
     background-color: rgb(18, 69, 64, 1);
     background-image: radial-gradient(circle, rgba(45, 112, 92, 1) 20%, rgba(18, 69, 64, 1) 90%);
-    color: var(--color-bg);
+    color: white;
 }
 
 .next .subtext {
@@ -135,5 +148,11 @@ if (meta === "free") {
 
 .sc-top .subtext {
     text-align: end;
+}
+
+@media (prefers-color-scheme: dark) {
+    .normal {
+        /* background-color: var(--color-accent700); */
+    }
 }
 </style>

@@ -15,9 +15,13 @@ export const scheduleRouter = router({
         })
     }),
     list: publicProcedure.query(async () => {
-        return await getSchedulesByFilter({})
+        return await getSchedulesByFilter({
+            take: 10,
+            start: 0
+        })
     }),
     search: publicProcedure.input(ZScheduleFilter).query(async  ({ input }) => {
+        console.log(input)
         return await getSchedulesByFilter(input)
     }),
     getRecommend: publicProcedure.input(z.object({

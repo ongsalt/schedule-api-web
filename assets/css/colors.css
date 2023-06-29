@@ -3,7 +3,10 @@
     --color-accent100: #FEF5E7;
     --color-accent300: #FCE7C5;
     --color-accent500: #F9CB80;
+    --color-accent600: #f2a832;
     --color-accent700: #B97509;
+    --color-accent900: #451a03;
+    
     --color-accent-trans: #F5A5242a;
     --color-accent-shadow: #F5A5246a;
 
@@ -30,14 +33,25 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-accent: rgb(236, 81, 122);
+        --color-accent: #febf4c;
+        --color-accent100: #FEF5E7;
+        --color-accent300: #FCE7C5;
+        --color-accent500: #F9CB80;
+        --color-accent600: #f2a832;
+        --color-accent700: #B97509;
 
         --color-text: #bdbdbd;
         --color-text-heading: #e3e3e3;
         --color-text-secondary: #a9a9a9a0;
 
-        --color-bg: #111111;
-        --color-border: rgba(255, 255, 255, .1);
+        --color-bg: #000000;
+        --color-bg-immersive: #111316;
+        --color-bg-trans: #111316a0;
+        --color-surface: #2e2f2a;
+        --color-active: rgba(255, 255, 255, 0.05);
+        --color-border: rgba(255, 255, 255, 0.1);
+        --color-contrast: rgba(255, 255, 255, 0.2);
+        --color-fg: #000;
 
         --shadow0: 0px 2px 12px #00000030;
         --shadow1: 0px 5px 15px #000000b5;

@@ -1,6 +1,8 @@
 import { Time } from "~/types/time"
 
 export const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+export const daysLowerCase = days.map(it => it.toLowerCase())
+export const daysShort = days.map(it => it.slice(0, 3))
 export type Day = "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday"
 
 export const startTime: Time = {

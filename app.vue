@@ -29,11 +29,17 @@ watchEffect(() => {
 </script>
 
 <style>
-.page-enter-active {
+/* .page-enter-active {
   transition: all .5s var(--ease-ios-last), opacity .5s;
 }
 .page-leave-active {
   transition: all .25s var(--ease-ios-first), opacity .25s;
+} */
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 1s var(--ease-ios),
+    opacity .7s;
 }
 
 .page-enter-from,
@@ -44,7 +50,7 @@ watchEffect(() => {
   width: 100%;
   scale: 0.9;
   box-sizing: border-box;
-  opacity: 0.5;
+  opacity: 0;
   filter: blur(2rem);
 }
 

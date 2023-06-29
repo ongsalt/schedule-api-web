@@ -1,18 +1,101 @@
 <script lang="ts" setup>
-import { ScheduleFilter } from '~/types/schedule';
+import { ScheduleFilter, Schedule } from '~/types/schedule';
+import { SearchCommand, FilterArgument } from '~/types/search';
+import { daysShort } from '~/utils/datetime';
+
+const { $client } = useNuxtApp()
 
 const text = ref("")
 const autocompletePopup = ref()
+const isLoading = ref(false)
+const schedules = ref<Schedule[]>([])
 
-// onMounted(() => {
-//   autocompletePopup.value.style.top = '0px'
-// })
+const commands: SearchCommand[] = [
+  {
+    key: "for",
+    text: "Class",
+    defualt: "M.6/5"
+  },
+  {
+    key: "day",
+    text: "In",
+    option: days,
+    defualt: "Monday"
+  },
+  {
+    key: "period",
+    text: "Period",
+    isNumber: true,
+    defualt: "8"
+  },
+  {
+    key: "room",
+    text: "At",
+    defualt: "2305"
+  },
+  {
+    key: "subjectName",
+    text: "Studying",
+    defualt: "Science"
+  }
+]
 
-const filter: ScheduleFilter = ref({
-  
+const filterArguments = ref<FilterArgument>(new FilterArgument())
+
+const onInput = (event: any, command: SearchCommand) => {
+  const value: string = event.target.innerText
+  const res = filterArguments.value.set(command.key, value)
+  if (res.ok) {
+    console.log(`OK  set ${command.key} ${value}`)
+  } else {
+    console.log(`Err set${command.key} ${value}: ${res.reason}`)
+  }
+}
+
+const onSearch = async () => {
+  const filter: ScheduleFilter = filterArguments.value.scheduleFilter
+  isLoading.value = true
+
+  const data = await $client.schedule.search.query(filter)
+
+  schedules.value = data
+  console.log(schedules.value)
+  isLoading.value = false
+
+  console.log(filter)
+}
+
+const loadPreviousSearch = () => {
+  const str = localStorage.getItem("searchFilter")
+  if (str) {
+    filterArguments.value = FilterArgument.parse(str)
+  }
+  // or use default value
+}
+
+const getColorMode = (s: Schedule, i: number) => {
+  if (s.subject.name === 'Free') {
+    return "free"
+  }
+  if (i === 0) {
+    return "current"
+  }
+  if (i === 1) {
+    return "next"
+  }
+  return "normal"
+}
+
+watchEffect(() => {
+
+  if (filterArguments.value.argument.size !== 0) {
+    onSearch()
+  }
 })
 
-const print = (event: any) => console.log(event.target.innerText)
+onMounted(() => {
+  loadPreviousSearch()
+})
 
 </script>
 
@@ -21,40 +104,21 @@ const print = (event: any) => console.log(event.target.innerText)
     <section>
       <h1 class="mb-32 "> Search </h1>
       <div class="filter-list">
-        <div class="filter" ref="filterClass">
-          <h2 class=""> Class
-            <span class="highlight" contenteditable @input="print"> M.6/5 </span>
+        <div class="filter" v-for="command, i in commands" :class="{ disabled: !filterArguments.has(command.key) }">
+          <h2 @click="filterArguments.set(command.key, command.defualt)"> {{ command.text }}
+            <span class="highlight" contenteditable @input="event => onInput(event, command)"> {{ command.defualt }}
+            </span>
           </h2>
-          <Icon size="1.4rem" id="delete" class="delete" />
+          <Icon size="1.4rem" id="delete" class="delete" @click="filterArguments.remove(command.key)" />
         </div>
-        <div class="filter" ref="filterDay">
-          <h2 class=""> In
-            <span class="highlight" contenteditable> Wednesday </span>
-          </h2>
-          <Icon size="1.4rem" id="delete" class="delete" />
-        </div>
-        <div class="filter" ref="filterPeriod">
-          <h2 class=""> Period
-            <span class="highlight" contenteditable> 8 </span>
-          </h2>
-          <Icon size="1.4rem" id="delete" class="delete" />
-        </div>
-        <div class="filter" ref="filterRoom">
-          <h2 class=""> At
-            <span class="highlight" contenteditable> 2305 </span>
-          </h2>
-          <Icon size="1.4rem" id="delete" class="delete" />
-        </div>
-        <div class="filter" ref="filterSubjectName">
-          <h2 class=""> Studying
-            <span class="highlight" contenteditable> Science </span>
-          </h2>
-          <Icon size="1.4rem" id="delete" class="delete" />
-        </div>
+
       </div>
-      <button class="highlight add"> Add filter
+      <!-- <button class="add" @click="onSearch">
+        <h2>
+          Search
+        </h2>
         <Icon id="keyboard_return" size="1.5rem" />
-      </button>
+      </button> -->
       <!-- <div class="autocomplete" ref="autocompletePopup">
         <li tabindex="1"> auto complete </li>
         <li tabindex="1"> auto complete </li>
@@ -63,22 +127,61 @@ const print = (event: any) => console.log(event.target.innerText)
       </div> -->
     </section>
     <div class="divider small-screen"></div>
-    <CardGrid>
-      <ScheduleCard classroom="1210" teacher="Apasri" subject="Light and modern physics" mode="current" id="ว23102"
-        meta="Wed • 1" />
-      <ScheduleCard classroom="42069" class-target="6/5" teacher="Yomum" subject="jhgyfueyguhi" mode="next" id="ค42069"
-        meta="Wed • 2" />
-      <ScheduleCard classroom="177013" subject="jhgyfueyguhi" mode="free" id="ค42069" meta="Wed • 3" />
-      <ScheduleCard classroom="2305" teacher="Kaoyum" subject="jhgyfueyguhi" mode="random" id="ค42069" meta="Wed • 4" />
-      <ScheduleCard classroom="42069" subject="jhgyfueyguhi" mode="random" id="ค42069" meta="Wed • 5" />
-      <ScheduleCard classroom="42069" teacher="Yomum" subject="jhgyfueyguhi" mode="random" id="ค42069" meta="Wed • 6" />
-      <ScheduleCard classroom="42069" teacher="Yomum" subject="jhgyfueyguhi" mode="random" id="ค42069" meta="Wed • 7" />
-      <ScheduleCard classroom="42069" teacher="Yomum" subject="jhgyfueyguhi" mode="random" id="ค42069" meta="Wed • 8" />
-    </CardGrid>
+    <Transition name="fade" mode="out-in">
+      <div class="blank" v-if="filterArguments.argument.size === 0">
+        <h1> :-) </h1>
+        <h2> Select some filter first </h2>
+      </div>
+      <CardGrid v-else-if="schedules.length !== 0">
+        <ScheduleCard v-for="s, i in schedules" :classroom="s.room ?? 'Unknow room'"
+          :teacher="s.subject.teachers.map(it => it.name).join(', ')" :subject="s.subject.name" :mode="getColorMode(s, i)"
+          :id="s.subject.code" :meta="`${daysShort[s.day]} • ${s.period}`" :large="i === 0" />
+      </CardGrid>
+      <div class="blank" v-else>
+        <h1> :-( </h1>
+        <h2> No result found </h2>
+      </div>
+    </Transition>
   </CommonContainer>
 </template>
 
 <style scoped>
+/* .fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s var(--ease-ios);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  scale: .95;
+  filter: blur(1.2rem);
+  opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  scale: 1;
+  opacity: 1;
+} */
+
+
+section {
+  margin-top: 12vh;
+}
+
+.blank h1 {
+  font-size: 10rem;
+}
+
+.blank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  opacity: .2;
+  padding-bottom: 15vh;
+}
+
 .highlight {
   color: var(--color-accent);
   padding: 2px 8px;
@@ -90,7 +193,7 @@ const print = (event: any) => console.log(event.target.innerText)
 
 .delete {
   transition: all .3s;
-  color: transparent;
+  color: var(--color-contrast);
 }
 
 .delete:hover {
@@ -101,20 +204,22 @@ const print = (event: any) => console.log(event.target.innerText)
   color: var(--color-contrast);
 }
 
-.add {
-  opacity: .6;
-  line-height: 1;
-  background-color: transparent;
-  padding: 4px 10px;
-  border: 3px solid var(--color-accent);
-  border-style: dashed;
-  transition: opacity .2s;
-  align-items: end;
-  /* display: inline-block; */
+.disabled .delete {
+  color: transparent !important;
 }
 
-.add:hover {
-  opacity: 1;
+.filter {
+  scale: 1;
+  transition: all .5s var(--ease-ios);
+}
+
+.filter * {
+  filter: none;
+  transition: all .5s var(--ease-ios);
+}
+
+.add {
+  padding: 12px;
 }
 
 .filter {
@@ -176,5 +281,21 @@ input.highlight {
 .page-enter-from,
 .page-leave-to {
   top: 0px;
+}
+
+.disabled:not(:focus-within) {
+  scale: .95;
+}
+
+.disabled:not(:focus-within) h2 {
+  text-decoration: dashed;
+  filter: grayscale();
+  opacity: .5;
+  /* text-decoration: underline; */
+  color: var(--color-contrast);
+}
+
+.disabled:not(:focus-within) span {
+  /* opacity: .5; */
 }
 </style>
