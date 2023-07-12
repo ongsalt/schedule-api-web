@@ -1,7 +1,7 @@
 <template>
     <Card class="sc-card" :class="colorMode">
         <div>
-            <h2> yeah </h2>
+            <h2> Done </h2>
         </div>
     </Card>
 </template>
@@ -13,7 +13,6 @@ type ColorMode = "vibrant" | "accent" | "deep" | "surface" | "normal"
 const { colorMode } = defineProps<{
     colorMode: ColorMode 
 }>()
-
 
 </script>
 

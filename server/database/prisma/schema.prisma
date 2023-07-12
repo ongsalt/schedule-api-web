@@ -48,7 +48,6 @@ model Subject {
 }
 
 model Schedule {
-    id        Int     @id @default(autoincrement())
     forYear   Int
     forRoom   Int
     subject   Subject @relation(fields: [subjectId], references: [id])
@@ -56,4 +55,6 @@ model Schedule {
     period    Int
     day       Int
     room      String?
+
+    @@id([forYear, forRoom, day, period])
 }

@@ -19,7 +19,7 @@ const { schedule } = defineProps<{ schedule?: Schedule }>()
 
 const code = schedule?.subject.code
 const name = schedule?.subject.name
-const teacher = schedule?.subject.teacher.name
+const teacher = schedule?.subject.teachers.flatMap(it => [it.name, it.name, it.name, it.name, it.name, it.name]).join(" ")
 const room = schedule?.room
 
 </script>

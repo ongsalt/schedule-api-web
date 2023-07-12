@@ -14,10 +14,10 @@ const getRandomSubject = (day: number, period: number): Schedule => {
             code: `ส${rng(39999)}`,
             id: rng(),
             name: `เสือก${rng(999)}`,
-            teacher: {
+            teachers: [{
                 name: `ครู${rng(99)}`,
                 id: rng()
-            }
+            }]
         },
         room: rng(9999).toString()
     }

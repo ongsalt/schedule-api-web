@@ -51,11 +51,14 @@ const onUpdateClassTarget = async () => {
       <h1 class="mb-32"> It's been a long day </h1>
       <p class="secondary mb-32"> Trick: just skip the class </p>
     </section>
-    <CardGrid>
+    <CardGrid v-if="schedules.length > 0">
       <ScheduleCard v-for="s in schedules" :classroom="s.room ?? ''" :teacher="s.teacherName" :subject="s.subjectName"
-        :id="s.subjectCode" :meta="s.location" :large="s.location === 'Current'"/>
-      <RecommendCard color-mode="vibrant"/>
+        :id="s.subjectCode" :meta="s.location" :large="s.location === 'Current'" />
     </CardGrid>
+    <div class="blank" v-else>
+      <h1> :-) </h1>
+      <h2> School is end now </h2>
+    </div>
   </CommonContainer>
 </template>
 
@@ -63,6 +66,21 @@ const onUpdateClassTarget = async () => {
 .hero {
   top: 35vh !important;
 }
+
+.blank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  opacity: .2;
+  padding-bottom: 15vh;
+}
+
+
+.blank h1 {
+  font-size: 10rem;
+}
+
 
 .page-enter-from,
 .page-leave-to {

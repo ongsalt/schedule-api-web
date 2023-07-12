@@ -10,9 +10,11 @@
     --color-accent-trans: #F5A5242a;
     --color-accent-shadow: #F5A5246a;
 
-    --color-blue: #0072F5;
+    --color-blue: #3b82f6;
+    --color-blue-trans: #3b82f650;
+    --color-blue600: #2563eb;
     --color-blue700: #005FCC;
-    --color-blue500: #5EA2EF;
+    --color-blue500: #3b82f6;
 
     --color-text: #11181C;
     --color-text-secondary: rgba(17, 24, 28, 0.5);

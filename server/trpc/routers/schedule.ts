@@ -21,7 +21,7 @@ export const scheduleRouter = router({
         })
     }),
     search: publicProcedure.input(ZScheduleFilter).query(async  ({ input }) => {
-        console.log(input)
+        // console.log(input)
         return await getSchedulesByFilter(input)
     }),
     getRecommend: publicProcedure.input(z.object({

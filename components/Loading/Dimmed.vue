@@ -24,7 +24,7 @@ const listener = (event: KeyboardEvent) => {
     }
 }
 
-watch(props, (it) => {
+watch(() => props, (it) => {
     if (it.isShow) {
         document.addEventListener('keyup', listener)
     } else {
@@ -40,7 +40,7 @@ watch(props, (it) => {
     top: 0;
     left: 0;
     height: 100vh;
-    width: 100vw;
+    width: 200vw;
     z-index: 999;
     transition: opacity .4s;
     background-color: rgba(0, 0, 0, 0.6);
