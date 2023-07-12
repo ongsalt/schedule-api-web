@@ -82,3 +82,35 @@ export async function getSchedulesByDaySince(forYear: number, forClass: number, 
         }
     })
 }
+
+export async function getSchedule(forYear: number, forClass: number, day: number, period: number) {
+    return await prisma.schedule.findFirstOrThrow({
+        where: {
+            forYear: forYear,
+            forRoom: forClass,
+            day: day,
+            period: {
+                gte: period
+            }
+        },
+        select: {
+            day: true,
+            period: true,
+            forRoom: true,
+            forYear: true,
+            room: true,
+            subject: {
+                select: {
+                    name: true,
+                    code: true,
+                    link: true,
+                    teachers: {
+                        select: {
+                            name: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+}

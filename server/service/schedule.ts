@@ -1,6 +1,8 @@
-import { getSchedulesByDaySince, getSchedulesByFilter } from "~/server/database/repositories/schedule";
+import { getSchedule, getSchedulesByDaySince, getSchedulesByFilter } from "~/server/database/repositories/schedule";
+import { APISchedule } from "~/types/api/schedule";
 import type { Period, PeriodLocation } from "~/types/period";
-import { ScheduleRecommendation } from "~/types/schedule";
+import { Err, Ok, Result } from "~/types/result";
+import { Schedule, ScheduleRecommendation } from "~/types/schedule";
 
 // Return [minuteOfDay, dayOfWeek]
 export function getThaiTime(): number[] {
@@ -18,11 +20,11 @@ export function getThaiTime(): number[] {
 
 export function getCurrentPeriod(test = false): Period {
 
-    return {
-        day: 1,
-        period: 3,
-        isInSchoolTime: true,
-    }
+    // return {
+    //     day: 1,
+    //     period: 3,
+    //     isInSchoolTime: true,
+    // }
     const [minutes, day] = getThaiTime();
 
     const alertTimes = [510, 560, 610, 660, 710, 760, 810, 860, 910, 960];
@@ -39,6 +41,34 @@ export function getCurrentPeriod(test = false): Period {
         isInSchoolTime: isInSchoolTimeCheck(day, count),
         day,
         period: count
+    }
+}
+
+export async function getCurrentSchedule(forYear: number, forClass: number): Promise<Result<APISchedule>> {
+
+    const { period, day, isInSchoolTime } = getCurrentPeriod()
+
+    if (!isInSchoolTime) {
+        return Err("Not in school time")
+    }
+
+    try {
+        const s = await getSchedule(forYear, forClass, day, period)
+
+        return Ok({
+            day: day,
+            period: day,
+            forRoom: s.forRoom,
+            forYear: s.forYear,
+            link: s.subject.link ?? undefined,
+            location: "Current",
+            room: s.room ?? undefined,
+            subjectCode: s.subject.code,
+            subjectName: s.subject.name,
+            teachers: s.subject.teachers.map(it => it.name)
+        })
+    } catch {
+        return Err("No schedule found.")
     }
 }
 
@@ -99,7 +129,7 @@ export async function getRecommendation(forYear: number, forClass: number): Prom
     // })
 
     const p = await getSchedulesByDaySince(forYear, forClass, period.day, period.period)
-    
+
     const res: ScheduleRecommendation[] = p.map(it => {
         return {
             location: getPeriodLocation(it.day, it.period, period),
