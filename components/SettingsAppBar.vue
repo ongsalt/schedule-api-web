@@ -71,6 +71,8 @@ nav {
     border-bottom: 1px solid var(--color-border);
     box-shadow: var(--shadow0);
     height: 40px;
+    z-index: 10;
+    margin: 0;
 }
 
 @media screen and (max-width: 640px) {

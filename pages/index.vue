@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { Schedule, ScheduleRecommendation } from '~/types/schedule';
 
-
 const { $client } = useNuxtApp()
 
 const classTarget = ref("M.6/5")

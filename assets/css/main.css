@@ -184,10 +184,45 @@ button.action:active {
   color: white;
 }
 
+button.cancel {
+  background-color: var(--color-border);
+  box-shadow: none;
+  color: var(--color-text);
+  transition: all .3s;
+}
+
+button.cancel:hover {
+  /* background-color: var(--color-contrast); */
+  /* box-shadow: 0px 4px 12px var(--color-accent-trans); */
+}
+
+button.cancel:active {
+  background-color: var(--color-contrast);
+}
+
 li {
   list-style-type: none;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   gap: 12px;
-  padding: 0 12px;
+  padding: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+#__nuxt {
+  transition: all .3s var(--ease-ios);
+  border-radius: 0px;
+} 
+
+#__nuxt.covered {
+  scale: .95;
+  border-radius: 12px;
+} 
+
+body.blackBg {
+  background-color: black;
 }

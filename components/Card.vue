@@ -1,12 +1,13 @@
 <template>
-    <div class="card" :class="{ elevated: elevated }">
+    <div class="card" :class="{ elevated: elevated, bordered: bordered }">
         <slot />
     </div>
 </template>
 
 <script setup lang="ts">
 defineProps<{
-    elevated?: boolean
+    elevated?: boolean,
+    bordered?: boolean
 }>()
 </script>
 
@@ -19,6 +20,9 @@ defineProps<{
 
 .elevated {
     box-shadow: var(--shadow1);
+}
+
+.bordered {
     border: 1px solid var(--color-border);
 }
 </style>

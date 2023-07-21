@@ -9,10 +9,10 @@ export default defineNuxtConfig({
     },
     css: ['~/assets/css/main.css', '~/assets/css/utility.css', '~/assets/css/colors.css'],
     app: {
-        pageTransition: {
-            name: 'page',
-            mode: 'in-out'
-        },
+        // pageTransition: {
+        //     name: 'page',
+        //     mode: 'in-out'
+        // },
         // layoutTransition: {
         //     name: 'slide',
         //     mode: 'in-out'

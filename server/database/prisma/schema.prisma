@@ -39,7 +39,7 @@ model Teacher {
 
 model Subject {
     id        Int        @id @default(autoincrement())
-    code      String
+    code      String?
     name      String
     link      String?
     tags      String
@@ -50,7 +50,7 @@ model Subject {
 model Schedule {
     forYear   Int
     forRoom   Int
-    subject   Subject @relation(fields: [subjectId], references: [id])
+    subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
     subjectId Int
     period    Int
     day       Int

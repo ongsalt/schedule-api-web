@@ -11,17 +11,17 @@ const route = useRoute()
 
 watchEffect(() => {
   if (process.client) {
-    if (route.meta.consoleBg) {
-      console.log("Changing color")
-      document.body.style.backgroundColor = "var(--color-bg)"
-      document.body.parentElement!.style.backgroundColor = "var(--color-bg)"
-      // document.body.parentElement!.style.scrollbarGutter = "auto"
-    } else {
-      document.body.style.backgroundColor = "var(--color-bg-immersive)"
-      document.body.parentElement!.style.backgroundColor = "var(--color-bg-immersive)"
-      // document.body.parentElement!.style.scrollbarGutter = "stable"
+    // if (route.meta.consoleBg) {
+    //   console.log("Changing color")
+    //   document.body.style.backgroundColor = "var(--color-bg)"
+    //   document.body.parentElement!.style.backgroundColor = "var(--color-bg)"
+    //   // document.body.parentElement!.style.scrollbarGutter = "auto"
+    // } else {
+    //   document.body.style.backgroundColor = "var(--color-bg-immersive)"
+    //   document.body.parentElement!.style.backgroundColor = "var(--color-bg-immersive)"
+    //   // document.body.parentElement!.style.scrollbarGutter = "stable"
 
-    }
+    // }
   }
 })
 

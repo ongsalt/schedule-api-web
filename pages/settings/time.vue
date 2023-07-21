@@ -6,7 +6,7 @@
         <input name="time" type="time">
     </div>
     <div class="labeled">
-        <label for="time"> Period duration </label>
+        <label for="duration"> Period duration </label>
         <input name="duration" type="number">
     </div>
     <button @click="isUnsaved = !isUnsaved"> {{ isUnsaved }} </button>
