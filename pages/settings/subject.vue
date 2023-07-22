@@ -52,6 +52,12 @@ const keyMeta = new Map<keyof typeof selected.value, KeyMeta>([
         formatForDisplay(data: Teacher[]) {
             return data?.map(it => it.name)?.join(", ") ?? " "
         },
+        async autocompleteResolver(query: string) {
+            return await $client.teacher.listForAutocomplete.query(query)
+        },
+        autocompleteFormat(data: Teacher) {
+            return data.name
+        },
     }],
     ["tags", {
         displayText: "Tags",
@@ -93,8 +99,8 @@ function hideDeletePopup() {
     }
 }
 
-async function deleteTeacher() {
-    await $client.teacher.delete.mutate({
+async function deleteSubject() {
+    await $client.subject.delete.mutate({
         id: selected.value.id!
     })
     await refresh()
@@ -132,7 +138,7 @@ definePageMeta({
         <p class="mb-16"> All schedule with this subject associated will get removed </p>
         <div class="horizontal h-end">
             <button class="cancel" @click="hideDeletePopup"> No </button>
-            <LoadingAsyncButton title="Yes" :action="deleteTeacher" />
+            <LoadingAsyncButton title="Yes" :action="deleteSubject" />
         </div>
     </Popup>
     <EditPane :hide="hideSidepane" :is-show="isSidePaneShow" :data="selected" :key-meta="keyMeta"

@@ -15,6 +15,6 @@ export const subjectRouter = router({
         return await deleteSubject(input.id)
     }),
     list: publicProcedure.query(async () => {
-        return await listSubject() 
+        return await listSubject()
     })
 })

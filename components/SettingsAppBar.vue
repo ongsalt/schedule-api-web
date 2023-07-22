@@ -8,8 +8,8 @@
             <div class="horizontal">
                 <img src="/favicon.ico" alt="Logo" class="logo">
                 <h3 style="color: var(--color-text);"> Settings </h3>
-                <p style="color: var(--color-contrast);"> / </p>
-                <h3 style="color: var(--color-text);"> Time </h3>
+                <!-- <p style="color: var(--color-contrast);"> / </p> -->
+                <!-- <h3 style="color: var(--color-text);"> Time </h3> -->
             </div>
         </NuxtLink>
 

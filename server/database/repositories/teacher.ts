@@ -17,12 +17,19 @@ export async function listTeacher() {
     })
 }
 
-export async function listTeacherForAutocomplete() {
+export async function listTeacherForAutocomplete(query: string) {
     return (await prisma.teacher.findMany({
         select: {
-            name: true
-        }
-    })).map(it => it.name)
+            name: true,
+            id: true
+        },
+        where: {
+            name: {
+                contains: query
+            }
+        },
+        take: 7
+    }))
 }
 
 export async function renameTeacher(id: number, name: string) {

@@ -36,8 +36,11 @@ const { data, keyMeta, editBuilder, removeBuilder } = defineProps<PropsType<any>
 <style scoped>
 thead {
     /* box-shadow: var(--shadow2); */
+    position: sticky;
+    top: 75px;
     border-radius: 12px;
-    background-color: var(--color-active);
+    background-color: var(--color-elevated);
+    /* color: var(--color-accent); */
 }
 
 thead tr th:first-child {

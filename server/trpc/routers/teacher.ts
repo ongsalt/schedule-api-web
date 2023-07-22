@@ -12,8 +12,8 @@ export const taecherRouter = router({
     list: publicProcedure.query(async () => {
         return await listTeacher()
     }),
-    listForAutocomplete: publicProcedure.query(async () => {
-        return await listTeacherForAutocomplete()
+    listForAutocomplete: publicProcedure.input(z.string()).query(async ({ input }) => {
+        return await listTeacherForAutocomplete(input)
     }),
     rename: publicProcedure.input(z.object({
         id: z.number(),

@@ -16,7 +16,10 @@ const form = ref()
 const internalData = ref<any>()
 const props = defineProps<PropsType<any>>()
 
-const update = ref(async () => {})
+const update = ref(async () => { })
+
+const { y } = useScroll(form)
+const scrolled = computed(() => y.value > 0)
 
 watchEffect(() => {
     internalData.value = structuredClone(toRaw(props.data))
@@ -28,8 +31,6 @@ const keys = Array.from(props.keyMeta.keys())
 
 const mutableKeys = keys.filter(it => props.keyMeta.get(it)?.mutable)
 
-const { y } = useScroll(form)
-const scrolled = computed(() => y.value > 0)
 
 </script>
 
@@ -48,16 +49,16 @@ const scrolled = computed(() => y.value > 0)
                     <div class="form" ref="form">
                         <div class="labeled mb-16" v-for="key in keyMeta.keys()">
                             <label for="a"> {{ keyMeta.get(key)?.displayText }} {{ !keyMeta.get(key)?.mutable ?
-                                "(Unchangable)" : "" }} {{ !keyMeta.get(key)?.notRequire && key !== 'id' ? "*" : "" }} </label>
-                            <div v-if="keyMeta.get(key)?.formatForDisplay">
-                                {{ keyMeta.get(key)!.formatForDisplay!(internalData[key]) }}
-                                <div>
-                                    autocomplete component
-                                </div>
+                                "(Unchangable)" : "" }} {{ !keyMeta.get(key)?.notRequire && key !== 'id' ? "*" : "" }}
+                            </label>
+                            <div v-if="keyMeta.get(key)?.autocompleteResolver" class="relative">
+                                <!-- autocomplete -->
+                                <Autocomplete v-model="internalData[key]" :resolve="keyMeta.get(key)?.autocompleteResolver!"
+                                    :format-for-display="keyMeta.get(key)?.autocompleteFormat!"
+                                    :key="`${key.toString()}${title}`" />
                             </div>
                             <input v-else-if="isCreateNew && key === 'id'" type="text" disabled value="Autogenerate">
-                            <input type="text" :disabled="!!!keyMeta.get(key)?.mutable" v-model="internalData[key]"
-                                v-else>
+                            <input type="text" :disabled="!!!keyMeta.get(key)?.mutable" v-model="internalData[key]" v-else>
                         </div>
                     </div>
                     <div class="horizontal bottom">
@@ -101,6 +102,7 @@ const scrolled = computed(() => y.value > 0)
 
 .background {
     background-color: var(--color-bg-trans);
+    /* background-color: var(--color-border); */
 }
 
 .fullscreen {

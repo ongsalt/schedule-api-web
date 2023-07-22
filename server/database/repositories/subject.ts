@@ -1,3 +1,4 @@
+import { number } from "zod";
 import { prisma } from "~/server/database/prisma/client";
 
 export async function listSubject() {
@@ -10,7 +11,8 @@ export async function listSubject() {
             tags: true,
             teachers: {
                 select: {
-                    name: true
+                    name: true,
+                    id: true
                 }
             }
         }
@@ -32,5 +34,9 @@ export async function createSubject(name: string, code: string, teacherIds?: num
 }
 
 export async function deleteSubject(id: number) {
-    
+    return await prisma.subject.delete({
+        where: {
+            id: id
+        }
+    })
 }
