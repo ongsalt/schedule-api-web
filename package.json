@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "schedule-api-v2",
   "private": true,
   "scripts": {
     "build": "nuxt build",
