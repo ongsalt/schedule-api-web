@@ -11,8 +11,8 @@
                 <td v-for="k in keyMeta.keys()"> {{ keyMeta.get(k)?.formatForDisplay !== undefined ?
                     keyMeta.get(k)!.formatForDisplay!(it[k]) : it[k] }} </td>
                 <td class="horizontal">
-                    <IconButton id="edit" :action="editBuilder(it.id)" />
-                    <IconButton id="delete" :action="removeBuilder(it.id)" />
+                    <IconButton id="edit" :action="editBuilder(it)" />
+                    <IconButton id="delete" :action="removeBuilder(it)" />
                 </td>
             </tr>
         </tbody>
@@ -25,8 +25,8 @@ import { KeyMeta } from '~/types/ui/keyMeta';
 type PropsType<T> = {
     data: T[],
     keyMeta: Map<keyof T, KeyMeta>
-    editBuilder: (arg0: number) => () => void,
-    removeBuilder: (arg0: number) => () => void,
+    editBuilder: (arg0: T) => () => void,
+    removeBuilder: (arg0: T) => () => void,
 }
 
 const { data, keyMeta, editBuilder, removeBuilder } = defineProps<PropsType<any>>()

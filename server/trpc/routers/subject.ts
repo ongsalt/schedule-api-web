@@ -1,9 +1,12 @@
 import { z } from "zod"
 import { prisma } from "~/server/database/prisma/client"
-import { createSubject, listSubject, deleteSubject } from "~/server/database/repositories/subject"
+import { createSubject, listSubject, deleteSubject, updateSubject, listSubjectForAutocomplete } from "~/server/database/repositories/subject"
 import { auth } from "~/server/trpc/middleware/auth"
 import { router, publicProcedure } from "~/server/trpc/trpc"
-import { ZSubject, ZSubjectCreate } from "~/types/subject"
+import { ZSubject, ZSubjectCreate, ZSubjectUpdate } from "~/types/subject"
+
+// Todo 
+// implement update method
 
 export const subjectRouter = router({
     new: publicProcedure.use(auth).input(ZSubjectCreate).mutation(async ({ input }) => {
@@ -16,5 +19,11 @@ export const subjectRouter = router({
     }),
     list: publicProcedure.query(async () => {
         return await listSubject()
+    }),
+    listForAutocomplete: publicProcedure.input(z.string()).query(async ({ input }) => {
+        return await listSubjectForAutocomplete(input)
+    }),
+    update: publicProcedure.use(auth).input(ZSubjectUpdate).mutation(async ({ input }) => {
+        return await updateSubject(input)
     })
 })

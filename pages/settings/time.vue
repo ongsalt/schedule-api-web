@@ -9,8 +9,8 @@
         <label for="duration"> Period duration </label>
         <input name="duration" type="number">
     </div>
-    <button @click="isUnsaved = !isUnsaved"> {{ isUnsaved }} </button>
-    <SaveBar  :show="isUnsaved"/>
+    
+    <SaveBar  show text="Not implemented yet"/>
 </template>
 
 <script setup lang="ts">

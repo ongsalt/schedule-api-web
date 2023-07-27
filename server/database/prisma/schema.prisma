@@ -33,7 +33,7 @@ model Session {
 
 model Teacher {
     id       Int       @id @default(autoincrement())
-    name     String
+    name     String 
     subjects Subject[]
 }
 

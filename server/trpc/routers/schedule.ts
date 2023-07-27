@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { prisma } from "~/server/database/prisma/client"
-import { getSchedulesByFilter } from "~/server/database/repositories/schedule"
+import { deleteSchedule, getSchedulesByFilter } from "~/server/database/repositories/schedule"
 import { getCurrentPeriod, getRecommendation } from "~/server/service/schedule"
 import { auth } from "~/server/trpc/middleware/auth"
 import { router, publicProcedure } from "~/server/trpc/trpc"
@@ -14,13 +14,21 @@ export const scheduleRouter = router({
             data: input
         })
     }),
+    delete: publicProcedure.use(auth).input(z.object({
+        forYear: z.number(),
+        forRoom: z.number(),
+        day: z.number(),
+        period: z.number(),
+    })).mutation(async ({ input }) => {
+        return await deleteSchedule(input.forYear, input.forRoom, input.day, input.period)
+    }),
     list: publicProcedure.query(async () => {
         return await getSchedulesByFilter({
             take: 10,
             start: 0
         })
     }),
-    search: publicProcedure.input(ZScheduleFilter).query(async  ({ input }) => {
+    search: publicProcedure.input(ZScheduleFilter).query(async ({ input }) => {
         // console.log(input)
         return await getSchedulesByFilter(input)
     }),
@@ -29,7 +37,7 @@ export const scheduleRouter = router({
         forClass: z.number(),
     })).query(async ({ input }) => {
         // return []
-        
+
         return await getRecommendation(input.forYear, input.forClass)
     }),
     getCurrentPeriod: publicProcedure.query(() => {

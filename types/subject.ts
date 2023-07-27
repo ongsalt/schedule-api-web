@@ -14,10 +14,20 @@ export const ZSubject = z.object({
 
 export const ZSubjectCreate = z.object({
     name: z.string(),
-    code: z.string(),
+    code: z.string().optional(),
     link: z.string().optional(),
     tags: z.string().optional(),
     teacherIds: z.number().array().optional(),
 })
+
+export const ZSubjectUpdate = z.object({
+    id: z.number(),
+    name: z.string().optional(),
+    code: z.string().optional(),
+    link: z.string().optional(),
+    tags: z.string().optional(),
+    teacherIds: z.number().array().optional(),
+})
+
 
 export type Subject = z.infer<typeof ZSubject>

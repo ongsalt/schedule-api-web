@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import { number } from "zod";
 import { prisma } from "~/server/database/prisma/client";
 import { ScheduleFilter } from "~/types/schedule";
 
@@ -110,6 +111,19 @@ export async function getSchedule(forYear: number, forClass: number, day: number
                         }
                     }
                 }
+            }
+        }
+    })
+}
+
+export async function deleteSchedule(forYear: number, forRoom: number, day: number, period: number) {
+    return await prisma.schedule.delete({
+        where: {
+            forYear_forRoom_day_period: {
+                forRoom,
+                forYear,
+                day,
+                period, 
             }
         }
     })

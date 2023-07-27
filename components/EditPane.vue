@@ -53,9 +53,21 @@ const mutableKeys = keys.filter(it => props.keyMeta.get(it)?.mutable)
                             </label>
                             <div v-if="keyMeta.get(key)?.autocompleteResolver" class="relative">
                                 <!-- autocomplete -->
-                                <Autocomplete v-model="internalData[key]" :resolve="keyMeta.get(key)?.autocompleteResolver!"
+                                <p class="mb-4" v-if="keyMeta.get(key)?.multiple"> {{ internalData[key].length > 0 ?
+                                    keyMeta.get(key)?.formatForDisplay!(internalData[key]) : "None" }}</p>
+                                <AutocompleteMultiple v-if="keyMeta.get(key)?.multiple" v-model="internalData[key]"
+                                    :resolve="keyMeta.get(key)?.autocompleteResolver!"
                                     :format-for-display="keyMeta.get(key)?.autocompleteFormat!"
-                                    :key="`${key.toString()}${title}`" />
+                                    :key="`${key.toString()}${title}-multiple`" />
+                                <Autocomplete v-else-if="key !== 'day'" v-model="internalData[key]"
+                                    :resolve="keyMeta.get(key)?.autocompleteResolver!"
+                                    :format-for-display="keyMeta.get(key)?.autocompleteFormat!"
+                                    :key="`${key.toString()}${title}-single`" :get-description="keyMeta.get(key)?.getDescriptionForDisplay"/>
+                                <AutocompletePrimitive v-else v-model="internalData[key]"
+                                    :resolve="keyMeta.get(key)?.autocompleteResolver!"
+                                    :format-for-display="keyMeta.get(key)?.autocompleteFormat!"
+                                    :key="`${key.toString()}${title}-primitive`"/>
+
                             </div>
                             <input v-else-if="isCreateNew && key === 'id'" type="text" disabled value="Autogenerate">
                             <input type="text" :disabled="!!!keyMeta.get(key)?.mutable" v-model="internalData[key]" v-else>
@@ -152,5 +164,4 @@ const mutableKeys = keys.filter(it => props.keyMeta.get(it)?.mutable)
     translate: 24px 0;
     /* scale: .9; */
     opacity: 0;
-}
-</style>
+}</style>

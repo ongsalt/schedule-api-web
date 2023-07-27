@@ -19,6 +19,10 @@
     color: #F31260;
 }
 
+.mb-4 {
+    margin-bottom: 4px !important;
+}
+
 .mb-16 {
     margin-bottom: 16px !important;
 }

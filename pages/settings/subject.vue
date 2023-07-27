@@ -48,6 +48,7 @@ const keyMeta = new Map<keyof typeof selected.value, KeyMeta>([
     ["teachers", {
         displayText: "Teacher",
         mutable: true,
+        multiple: true,
         notRequire: true,
         formatForDisplay(data: Teacher[]) {
             return data?.map(it => it.name)?.join(", ") ?? " "
@@ -114,11 +115,22 @@ function hideSidepane() {
 
 async function onUpdatedOrAdded(data: Subject) {
     if (doCreatedNew.value) {
-        // await $client.subject.new.mutate({
-
-        // })
+        await $client.subject.new.mutate({
+            name: data.name,
+            code: data.code ?? undefined,
+            link: data.link ?? undefined,
+            tags: data.tags ?? undefined,
+            teacherIds: data.teachers.map(it => it.id!) ?? undefined,
+        })
     } else {
-        // await $client.teacher.rename.mutate()
+        await $client.subject.update.mutate({
+            id: data.id!,
+            code: data.code ?? undefined,
+            link: data.link ?? undefined,
+            name: data.name ?? undefined,
+            tags: data.tags ?? undefined,
+            teacherIds: data.teachers.map(it => it.id!) ?? undefined,
+        })
     }
 
     await refresh()
@@ -152,8 +164,8 @@ definePageMeta({
         <button class="action" @click="onAdd"> Add subject </button>
     </div>
 
-    <Table :data="data" :key-meta="keyMeta" :edit-builder="(id: number) => () => onEdit(id)"
-        :remove-builder="(id: number) => () => onBeforeDelete(id)" />
+    <Table :data="data" :key-meta="keyMeta" :edit-builder="(it) => () => onEdit(it.id)"
+        :remove-builder="(it) => () => onBeforeDelete(it.id)" />
 </template>
 
 

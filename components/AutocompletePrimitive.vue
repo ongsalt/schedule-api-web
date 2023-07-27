@@ -1,12 +1,11 @@
-<script setup lang="ts" generic="T extends { id: number }">
+<script setup lang="ts" generic="T extends string | number">
 
 type PropsType = {
-    getDescription?: (data: T) => string,
     formatForDisplay: (data: T) => string,
     resolve: (query: string) => Promise<T[]>,
 }
 
-const { formatForDisplay, resolve, getDescription } = defineProps<PropsType>()
+const { formatForDisplay, resolve } = defineProps<PropsType>()
 const selected = defineModel<T>({ required: true })
 
 // Component generic is still in beta so...
@@ -16,12 +15,7 @@ const filtered = computed(() =>
     query.value === ''
         ? available.value
         : available.value.filter((item) => {
-            const isSameName = formatForDisplay(item).toLowerCase().includes(query.value.toLowerCase())
-            if (!isSameName && getDescription) {
-                const isSameDescription = getDescription(item).toLowerCase().includes(query.value.toLowerCase())
-                return isSameDescription
-            }
-            return isSameName
+            return formatForDisplay(item).toLowerCase().includes(query.value.toLowerCase())
         })
 )
 
@@ -29,7 +23,7 @@ onMounted(async () => {
     // Different pointer -> Fuck it
     available.value = await resolve("")
     // selected.value = available.value.find(it => it.id === selected.value.id)!
-    // console.log(selected.value)
+    console.log(selected.value)
     // selected.value = available.value.find(it => selected.value.id == it.id)
 })
 
@@ -38,8 +32,7 @@ watch(query, async (it, oldValue) => {
         return
     }
     const data = await resolve(it)
-    const availableId = available.value.map(it => it.id)
-    const newOne = data.filter(it => !availableId.includes(it.id))
+    const newOne = data.filter(it => !available.value.includes(it))
     available.value = [...available.value, ...newOne]
 }, { immediate: true })
 
@@ -50,14 +43,11 @@ watch(query, async (it, oldValue) => {
         <HeadlessComboboxInput @change="query = $event.target.value"
             :display-value="it => formatForDisplay ? formatForDisplay(it as any) : ''" />
         <HeadlessComboboxOptions class="autocomplete-option" as="ul" v-if="filtered.length > 0">
-            <HeadlessComboboxOption v-for="item in filtered" :key="item.id" :value="item" v-slot="{ active, selected }"
+            <HeadlessComboboxOption v-for="item in filtered" :key="item" :value="item" v-slot="{ active, selected }"
                 as="template">
                 <li :class="{ active: active, selected: selected }">
-                    <div class="horizontal">
-                        <Icon id="Done" class="icon" />
-                        {{ formatForDisplay(item) }}
-                    </div>
-                    <p v-if="getDescription" class="teacherName"> {{ getDescription(item) }} </p>
+                    <Icon id="Done" class="icon" />
+                    {{ formatForDisplay(item) }}
                 </li>
             </HeadlessComboboxOption>
         </HeadlessComboboxOptions>
@@ -65,6 +55,37 @@ watch(query, async (it, oldValue) => {
 </template>
 
 <style scoped>
+.fake-input {
+    cursor: text;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface-elevated);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 8px;
+    box-sizing: border-box;
+    outline: 0px solid #00000000;
+    transition: outline .3s ease;
+}
+
+.fake-input:hover {
+    outline: 1px solid var(--color-accent-trans);
+}
+
+.fake-input:focus {
+    outline: 3px solid var(--color-accent-trans);
+}
+
+.fake-input p {
+    /* flex: 1; */
+    width: fit-content;
+}
+
+.fake-input input {
+    flex: 1;
+}
+
 .autocomplete-option {
     margin: 0;
     padding: 0;
@@ -86,15 +107,6 @@ watch(query, async (it, oldValue) => {
     padding: 4px 6px;
     text-indent: 0;
     gap: 4px;
-    justify-content: space-between;
-}
-
-.autocomplete-option li .horizontal {
-    gap: 0;
-}
-
-.autocomplete-option li p {
-    opacity: .4;
 }
 
 .autocomplete-option li.active {

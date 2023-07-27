@@ -6,7 +6,7 @@
     --color-accent600: #f2a832;
     --color-accent700: #B97509;
     --color-accent900: #451a03;
-    
+
     --color-accent-trans: #F5A5242a;
     --color-accent-shadow: #F5A5246a;
 
@@ -47,9 +47,10 @@
         --color-text-heading: #e3e3e3;
         --color-text-secondary: #a9a9a9a0;
 
-        --color-bg: #000000;
+        --color-bg: #0a0a0a;
         --color-bg-immersive: #111316;
         --color-bg-trans: #111316a0;
+        --color-elevated: #1b1b1b;
         --color-surface: #2e2f2a;
         --color-active: rgba(255, 255, 255, 0.05);
         --color-border: rgba(255, 255, 255, 0.1);

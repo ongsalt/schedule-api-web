@@ -106,8 +106,8 @@ definePageMeta({
         <button class="action" @click="onAdd"> Add teacher </button>
     </div>
 
-    <Table :data="data" :key-meta="keyMeta" :edit-builder="(id: number) => () => onEdit(id)"
-        :remove-builder="(id: number) => () => onBeforeDelete(id)" />
+    <Table :data="data" :key-meta="keyMeta" :edit-builder="(it) => () => onEdit(it.id)"
+        :remove-builder="(it) => () => onBeforeDelete(it.id)" />
 </template>
 
 
