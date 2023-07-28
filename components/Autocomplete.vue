@@ -71,7 +71,7 @@ watch(query, async (it, oldValue) => {
     position: absolute;
     background-color: var(--color-bg);
     overflow-y: auto;
-    max-height: 240px;
+    max-height: 150px;
     top: 40px;
     left: 0;
     right: 0;

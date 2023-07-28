@@ -77,7 +77,7 @@ watchEffect(() => {
 .content {
     margin-left: 240px;
     /* position: fixed; */
-    /* width: calc(100vw - 302px); */
+    min-width: fit-content;
     background-color: var(--color-bg);
     /* margin: 0 auto; */
 }

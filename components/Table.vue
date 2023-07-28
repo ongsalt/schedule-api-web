@@ -1,25 +1,31 @@
 <template>
-    <table>
-        <thead>
-            <tr>
-                <th v-for="{ displayText } in keyMeta.values()"> {{ displayText }} </th>
-                <th> Actions </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="it, index in data">
-                <td v-for="k in keyMeta.keys()"> {{ keyMeta.get(k)?.formatForDisplay !== undefined ?
-                    keyMeta.get(k)!.formatForDisplay!(it[k]) : it[k] }} </td>
-                <td class="horizontal">
-                    <IconButton id="edit" :action="editBuilder(it)" />
-                    <IconButton id="delete" :action="removeBuilder(it)" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="tableContainer">
+        <table>
+            <thead>
+                <tr>
+                    <th v-for="{ displayText } in keyMeta.values()"> {{ displayText }} </th>
+                    <th> Actions </th>
+                </tr>
+            </thead>
+            <tbody ref="parent">
+                <tr v-for="it, index in data">
+                    <td v-for="k in keyMeta.keys()"> {{ keyMeta.get(k)?.formatForDisplay !== undefined ?
+                        keyMeta.get(k)!.formatForDisplay!(it[k]) : it[k] }} </td>
+                    <td class="horizontal">
+                        <IconButton id="edit" :action="editBuilder(it)" />
+                        <IconButton id="delete" :action="removeBuilder(it)" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="loadmore-row">
+            <AsyncButton :action="fetchMore" title="Load more" />
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
+import AsyncButton from '~/components/Loading/AsyncButton.vue';
 import { KeyMeta } from '~/types/ui/keyMeta';
 
 type PropsType<T> = {
@@ -27,9 +33,16 @@ type PropsType<T> = {
     keyMeta: Map<keyof T, KeyMeta>
     editBuilder: (arg0: T) => () => void,
     removeBuilder: (arg0: T) => () => void,
+    fetchMore: () => Promise<void>,
 }
 
-const { data, keyMeta, editBuilder, removeBuilder } = defineProps<PropsType<any>>()
+const { data, keyMeta, editBuilder, removeBuilder, fetchMore } = defineProps<PropsType<any>>()
+
+// const parent = ref<HTMLElement>()
+// useInfiniteScroll(parent, async () => {
+//     console.log("Load")
+//     await fetchMore()
+// }, { distance: 5, interval: 20 })
 
 </script>
 
@@ -73,5 +86,11 @@ table {
     border-radius: 8px;
     /* border: 1px solid var(--color-border); */
     width: 100%;
+}
+.loadmore-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
