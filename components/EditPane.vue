@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { Result } from '~/types/result';
 import { KeyMeta } from '~/types/ui/keyMeta';
 
 type PropsType<T> = {
     data: T,
     keyMeta: Map<keyof T, KeyMeta>
-    onUpdate: (arg0: T) => Promise<void>
+    onUpdate: (arg0: T) => Promise<Result<void>>
 
     isShow: boolean,
     hide: () => any,
@@ -21,9 +22,20 @@ const update = ref(async () => { })
 const { y } = useScroll(form)
 const scrolled = computed(() => y.value > 0)
 
+const errorText = ref("") 
+
 watchEffect(() => {
     internalData.value = structuredClone(toRaw(props.data))
-    update.value = async () => await props.onUpdate(internalData.value)
+    errorText.value = ""
+    update.value = async () => {
+        const result = await props.onUpdate(internalData.value)
+        if (result.ok) {
+            errorText.value = ""
+        } else {
+            console.log(result.reason)
+            errorText.value = result.reason
+        }
+    }
     console.log(internalData.value)
 })
 
@@ -74,7 +86,7 @@ const mutableKeys = keys.filter(it => props.keyMeta.get(it)?.mutable)
                         </div>
                     </div>
                     <div class="horizontal bottom">
-                        <p> You have made some change </p>
+                        <p> {{ errorText ?? "" }} </p>
                         <div class="horizontal">
                             <LoadingAsyncButton title="Save" :action="update" />
                             <button class="cancel" @click="hide"> Cancel </button>

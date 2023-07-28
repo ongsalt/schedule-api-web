@@ -18,7 +18,7 @@ const props = defineProps<PropsType>()
 const listener = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
         if (props.hide && props.isShow) {
-            console.log("Trigger hide using ESC")
+            // console.log("Trigger hide using ESC")
             props.hide()
         }
     }

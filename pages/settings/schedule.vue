@@ -2,6 +2,8 @@
 import { Subject } from '~/types/subject';
 import { Schedule, ScheduleFilter } from '~/types/schedule';
 import { KeyMeta } from '~/types/ui/keyMeta';
+import { Ok, Result } from '~/types/result';
+import { Err } from '~/types/result';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 const daysId = [1, 2, 3, 4, 5, 6]
@@ -42,7 +44,12 @@ const data = ref(
     await $client.schedule.search.query(filter)
 )
 
-const fetchedScheduleAmount = computed(() => data.value.length)
+const isFiltered = computed(() => {
+    console.log(filter)
+    return filter.forRoom !== undefined || filter.forYear !== undefined || filter.period !== undefined
+        || filter.room !== undefined || filter.subjectName !== undefined || filter.teacherName !== undefined
+        || filter.day !== undefined
+})
 
 const keyMeta = new Map<keyof typeof selected.value, KeyMeta>([
     ["day", {
@@ -109,7 +116,7 @@ async function refresh() {
 
 function onEdit(target: Schedule) {
     selected.value = structuredClone(toRaw(target))
-    console.log(selected.value)
+    // console.log(selected.value)
     isSidePaneShow.value = true
 }
 
@@ -151,7 +158,7 @@ function hideDeletePopup() {
     }
 }
 
-async function deleteSubject() {
+async function deleteSchdule() {
     await $client.schedule.delete.mutate({
         day: selected.value.day,
         period: selected.value.period,
@@ -167,28 +174,48 @@ function hideSidepane() {
     isSidePaneShow.value = false
 }
 
-async function onUpdatedOrAdded(data: Subject) {
-    if (doCreatedNew.value) {
-        await $client.subject.new.mutate({
-            name: data.name,
-            code: data.code ?? undefined,
-            link: data.link ?? undefined,
-            tags: data.tags ?? undefined,
-            teacherIds: data.teachers.map(it => it.id!) ?? undefined,
-        })
-    } else {
-        await $client.subject.update.mutate({
-            id: data.id!,
-            code: data.code ?? undefined,
-            link: data.link ?? undefined,
-            name: data.name ?? undefined,
-            tags: data.tags ?? undefined,
-            teacherIds: data.teachers.map(it => it.id!) ?? undefined,
-        })
+async function onUpdatedOrAdded(data: Schedule): Promise<Result<void>> {
+    data.day = parseInt(data.day as any)
+    data.period = parseInt(data.period as any)
+    data.forRoom = parseInt(data.forRoom as any)
+    data.forYear = parseInt(data.forYear as any)
+
+    // console.log(data)
+    try {
+        if (doCreatedNew.value) {
+            await $client.schedule.new.mutate({
+                day: data.day,
+                period: data.period,
+                forRoom: data.forRoom,
+                forYear: data.forYear,
+                room: data.room ?? undefined,
+                subjectId: data.subject.id!,
+            })
+        } else {
+            console.log("Update")
+            await $client.schedule.update.mutate({
+                target: {
+                    day: selected.value.day,
+                    period: selected.value.period,
+                    forRoom: selected.value.forRoom,
+                    forYear: selected.value.forYear,
+                },
+                day: data.day,
+                period: data.period,
+                forRoom: data.forRoom,
+                forYear: data.forYear,
+                room: data.room ?? undefined,
+                subjectId: data.subject.id ?? undefined
+            })
+        }
+        await refresh()
+        hideSidepane()
+        return Ok(undefined)
+    } catch (e) {
+        console.log(e)
+        return Err(`${data.forYear}/${data.forRoom} have another class selected time.`)
     }
 
-    await refresh()
-    hideSidepane()
 }
 
 definePageMeta({
@@ -201,10 +228,10 @@ definePageMeta({
 <template>
     <Popup :is-show="isShowRemovePopup" :hide="hideDeletePopup" title="Delete schedule">
         <p> Are you really going to delete {{ selected.subject.name }} </p>
-        <p class="mb-16"> All schedule with this subject associated will get removed </p>
+        <!-- <p class="mb-16"> All schedule with this subject associated will get removed </p> -->
         <div class="horizontal h-end">
             <button class="cancel" @click="hideDeletePopup"> No </button>
-            <LoadingAsyncButton title="Yes" :action="deleteSubject" />
+            <LoadingAsyncButton title="Yes" :action="deleteSchdule" />
         </div>
     </Popup>
     <EditPane :hide="hideSidepane" :is-show="isSidePaneShow" :data="selected" :key-meta="keyMeta"
@@ -217,7 +244,7 @@ definePageMeta({
         </div>
         <div class="horizontal">
             <div class="realtive">
-                <button class="action" @click="showPopup" :class="{ active: filter }">
+                <button @click="showPopup" :class="{ action: !isFiltered ,active: filter }">
                     <Icon id="filter_list" /> Filter
                 </button>
                 <FilterPopup :update="refresh" :isShow="isShowFilterPopup" :hide="() => isShowFilterPopup = false"

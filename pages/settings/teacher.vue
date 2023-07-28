@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Teacher } from '@prisma/client';
+import { Err, Ok, Result } from '~/types/result';
 import { KeyMeta } from '~/types/ui/keyMeta';
 
 const { $client } = useNuxtApp()
@@ -66,17 +67,23 @@ function hideSidepane() {
     isSidePaneShow.value = false
 }
 
-async function onUpdatedOrAdded(data: Teacher) {
-    if (doCreatedNew.value) {
-        await $client.teacher.new.mutate({
-            name: data.name
-        })
-    } else {
-        await $client.teacher.rename.mutate(data)
-    }
+async function onUpdatedOrAdded(data: Teacher): Promise<Result<void>> {
+    try {
 
-    await refresh()
-    hideSidepane()
+        if (doCreatedNew.value) {
+            await $client.teacher.new.mutate({
+                name: data.name
+            })
+        } else {
+            await $client.teacher.rename.mutate(data)
+        }
+        
+        await refresh()
+        hideSidepane()
+        return Ok(undefined)
+    } catch (e) {
+        return Err("Something happen")
+    }
 }
 
 definePageMeta({

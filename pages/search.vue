@@ -46,9 +46,9 @@ const onInput = (event: any, command: SearchCommand) => {
   const value: string = event.target.innerText
   const res = filterArguments.value.set(command.key, value)
   if (res.ok) {
-    console.log(`OK  set ${command.key} ${value}`)
+    // console.log(`OK  set ${command.key} ${value}`)
   } else {
-    console.log(`Err set${command.key} ${value}: ${res.reason}`)
+    // console.log(`Err set${command.key} ${value}: ${res.reason}`)
   }
 }
 
@@ -59,10 +59,10 @@ const onSearch = async () => {
   const data = await $client.schedule.search.query(filter)
 
   schedules.value = data
-  console.log(schedules.value)
+  // console.log(schedules.value)
   isLoading.value = false
 
-  console.log(filter)
+  // console.log(filter)
 }
 
 const loadPreviousSearch = () => {

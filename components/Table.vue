@@ -18,10 +18,10 @@
                 </tr>
             </tbody>
         </table>
-        <div class="loadmore-row" v-if="data.length">
+        <div class="loadmore-row" v-if="data && data.length && fetchMore">
             <AsyncButton :action="fetchMore" title="Load more" />
         </div>
-        <div class="loadmore-row" v-if="data.length === 0">
+        <div class="loadmore-row" v-if="!data || data.length === 0">
             Not found. Try change filter.
         </div>
     </div>
@@ -36,10 +36,10 @@ type PropsType<T> = {
     keyMeta: Map<keyof T, KeyMeta>
     editBuilder: (arg0: T) => () => void,
     removeBuilder: (arg0: T) => () => void,
-    fetchMore: () => Promise<void>,
+    fetchMore?: () => Promise<void>,
 }
 
-const { data, keyMeta, editBuilder, removeBuilder, fetchMore } = defineProps<PropsType<any>>()
+const { data, keyMeta, editBuilder, removeBuilder } = defineProps<PropsType<any>>()
 
 // const parent = ref<HTMLElement>()
 // useInfiniteScroll(parent, async () => {

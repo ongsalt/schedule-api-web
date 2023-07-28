@@ -20,21 +20,21 @@ onMounted(() => {
 const fetchSchedules = async () => {
   isLoading.value = true
   const [forYear, forRoom] = classTarget.value.slice(2).split('/').map(num => parseInt(num))
-  console.log(forYear, forRoom)
+  // console.log(forYear, forRoom)
   const data = await $client.schedule.getRecommend.query({
     forYear,
     forClass: forRoom
   })
 
   schedules.value = data
-  console.log(schedules.value)
+  // console.log(schedules.value)
   localStorage.setItem('M.6/5', classTarget.value)
   isLoading.value = false
 }
 
 const onUpdateClassTarget = async () => {
   const pass = classRegex.test(classTarget.value)
-  console.log(pass)
+  // console.log(pass)
   if (!pass) return
 
   await fetchSchedules()

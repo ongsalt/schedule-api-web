@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Err, Ok, Result } from '~/types/result';
 import { Subject } from '~/types/subject';
 import { Teacher } from '~/types/teacher';
 import { KeyMeta } from '~/types/ui/keyMeta';
@@ -113,28 +114,34 @@ function hideSidepane() {
     isSidePaneShow.value = false
 }
 
-async function onUpdatedOrAdded(data: Subject) {
-    if (doCreatedNew.value) {
-        await $client.subject.new.mutate({
-            name: data.name,
-            code: data.code ?? undefined,
-            link: data.link ?? undefined,
-            tags: data.tags ?? undefined,
-            teacherIds: data.teachers.map(it => it.id!) ?? undefined,
-        })
-    } else {
-        await $client.subject.update.mutate({
-            id: data.id!,
-            code: data.code ?? undefined,
-            link: data.link ?? undefined,
-            name: data.name ?? undefined,
-            tags: data.tags ?? undefined,
-            teacherIds: data.teachers.map(it => it.id!) ?? undefined,
-        })
-    }
+async function onUpdatedOrAdded(data: Subject): Promise<Result<void>> {
+    try {
 
-    await refresh()
-    hideSidepane()
+        if (doCreatedNew.value) {
+            await $client.subject.new.mutate({
+                name: data.name,
+                code: data.code ?? undefined,
+                link: data.link ?? undefined,
+                tags: data.tags ?? undefined,
+                teacherIds: data.teachers.map(it => it.id!) ?? undefined,
+            })
+        } else {
+            await $client.subject.update.mutate({
+                id: data.id!,
+                code: data.code ?? undefined,
+                link: data.link ?? undefined,
+                name: data.name ?? undefined,
+                tags: data.tags ?? undefined,
+                teacherIds: data.teachers.map(it => it.id!) ?? undefined,
+            })
+        }
+
+        await refresh()
+        hideSidepane()
+        return Ok(undefined)
+    } catch (e) {
+        return Err("Something happen")
+    }
 }
 
 definePageMeta({

@@ -1,18 +1,20 @@
 import { z } from "zod"
 import { prisma } from "~/server/database/prisma/client"
-import { deleteSchedule, getSchedulesByFilter } from "~/server/database/repositories/schedule"
+import { addSchedule, deleteSchedule, getSchedulesByFilter, updateSchedule } from "~/server/database/repositories/schedule"
 import { getCurrentPeriod, getRecommendation } from "~/server/service/schedule"
 import { auth } from "~/server/trpc/middleware/auth"
 import { router, publicProcedure } from "~/server/trpc/trpc"
 import { prismaScheduleSelect } from "~/server/utils/transform"
-import { ZScheduleCreate, ZScheduleFilter } from "~/types/schedule"
+import { ZScheduleCreate, ZScheduleFilter, ZScheduleUpdate } from "~/types/schedule"
 import { ZTest } from "~/types/test"
 
 export const scheduleRouter = router({
-    new: publicProcedure.use(auth).input(ZScheduleCreate).query(async ({ input }) => {
-        return await prisma.schedule.create({
-            data: input
-        })
+    new: publicProcedure.use(auth).input(ZScheduleCreate).mutation(async ({ input }) => {
+        return await addSchedule(input)
+    }),
+    update: publicProcedure.use(auth).input(ZScheduleUpdate).mutation(async ({ input }) => {
+        console.log(input)
+        return await updateSchedule(input)
     }),
     delete: publicProcedure.use(auth).input(z.object({
         forYear: z.number(),

@@ -22,6 +22,21 @@ export const ZScheduleCreate = z.object({
     room: z.string().optional()
 })
 
+export const ZScheduleUpdate = z.object({
+    target: z.object({
+        forYear: z.number(),
+        forRoom: z.number(),
+        period: z.number(),
+        day: z.number(),
+    }),
+    forYear: z.number(),
+    forRoom: z.number(),
+    period: z.number(),
+    day: z.number(),
+    subjectId: z.number().optional(),
+    room: z.string().optional()
+})
+
 export const ZScheduleFilter = z.object({
     forYear: z.number().optional(),
     forRoom: z.number().optional(),

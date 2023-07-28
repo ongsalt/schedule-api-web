@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
-import { number } from "zod";
+import { number, z } from "zod";
 import { prisma } from "~/server/database/prisma/client";
-import { ScheduleFilter } from "~/types/schedule";
+import { ScheduleFilter, ZScheduleCreate, ZScheduleUpdate } from "~/types/schedule";
 
 export async function getSchedulesByFilter(input: ScheduleFilter) {
     const query: any = {}
@@ -39,7 +39,8 @@ export async function getSchedulesByFilter(input: ScheduleFilter) {
                     tags: true,
                     teachers: {
                         select: {
-                            name: true
+                            name: true,
+                            id: true
                         }
                     }
                 }
@@ -123,8 +124,35 @@ export async function deleteSchedule(forYear: number, forRoom: number, day: numb
                 forRoom,
                 forYear,
                 day,
-                period, 
+                period,
             }
+        }
+    })
+}
+
+export async function addSchedule(data: z.infer<typeof ZScheduleCreate>) {
+    return await prisma.schedule.create({
+        data: data
+    })
+}
+
+export async function updateSchedule(data: z.infer<typeof ZScheduleUpdate>) {
+    return await prisma.schedule.update({
+        where: {
+            forYear_forRoom_day_period: {
+                forRoom: data.target.forRoom,
+                forYear: data.target.forYear,
+                day: data.target.day,
+                period: data.target.period,
+            }
+        },
+        data: {
+            forRoom: data.forRoom,
+            forYear: data.forYear,
+            day: data.day,
+            period: data.period,
+            room: data.room,
+            subjectId: data.subjectId
         }
     })
 }
