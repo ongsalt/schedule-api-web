@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Subject } from '~/types/subject';
-import { Schedule } from '~/types/schedule';
+import { Schedule, ScheduleFilter } from '~/types/schedule';
 import { KeyMeta } from '~/types/ui/keyMeta';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -11,6 +11,7 @@ const { $client } = useNuxtApp()
 const isSidePaneShow = ref(false)
 const doCreatedNew = ref(false)
 const isShowRemovePopup = ref(false)
+const isShowFilterPopup = ref(false)
 
 const selected = ref<Schedule>({
     forRoom: 5,
@@ -25,12 +26,20 @@ const selected = ref<Schedule>({
     },
 })
 
-const filter = reactive({
-    text: "Filter"
+const filter = reactive<ScheduleFilter>({
+    start: 0,
+    take: 20,
+    day: undefined,
+    forRoom: undefined,
+    forYear: undefined,
+    period: undefined,
+    room: undefined,
+    subjectName: undefined,
+    teacherName: undefined
 })
 
 const data = ref(
-    await $client.schedule.list.query()
+    await $client.schedule.search.query(filter)
 )
 
 const fetchedScheduleAmount = computed(() => data.value.length)
@@ -83,13 +92,19 @@ const keyMeta = new Map<keyof typeof selected.value, KeyMeta>([
     }]
 ])
 
+function showPopup() {
+    isShowFilterPopup.value = !isShowFilterPopup.value
+}
+
 async function fetchMoreData() {
-    const newData = await $client.schedule.list.query(fetchedScheduleAmount.value)
+    filter.start += 20
+    const newData = await $client.schedule.search.query(filter)
     data.value = [...data.value, ...newData]
 }
 
 async function refresh() {
-    data.value = await $client.schedule.list.query()
+    filter.start = 0
+    data.value = await $client.schedule.search.query(filter)
 }
 
 function onEdit(target: Schedule) {
@@ -201,9 +216,13 @@ definePageMeta({
             <p class=""> Configure schedule data. </p>
         </div>
         <div class="horizontal">
-            <button class="action" @click="onAdd">
-                <Icon id="filter_list" /> {{ filter.text }}
-            </button>
+            <div class="realtive">
+                <button class="action" @click="showPopup" :class="{ active: filter }">
+                    <Icon id="filter_list" /> Filter
+                </button>
+                <FilterPopup :update="refresh" :isShow="isShowFilterPopup" :hide="() => isShowFilterPopup = false"
+                    :model-value="filter" />
+            </div>
             <div>
                 <button class="action" @click="onAdd"> Add subject </button>
             </div>

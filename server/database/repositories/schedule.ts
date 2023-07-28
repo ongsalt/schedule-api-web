@@ -9,7 +9,7 @@ export async function getSchedulesByFilter(input: ScheduleFilter) {
     if (input.forYear) query.forYear = input.forYear
     if (input.forRoom) query.forRoom = input.forRoom
     if (input.period) query.period = input.period
-    if (input.day) query.day = input.day
+    if (input.day || input.day === 0) query.day = input.day
     if (input.room) {
         query.room = {
             contains: input.room

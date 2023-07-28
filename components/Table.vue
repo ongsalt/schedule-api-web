@@ -18,8 +18,11 @@
                 </tr>
             </tbody>
         </table>
-        <div class="loadmore-row">
+        <div class="loadmore-row" v-if="data.length">
             <AsyncButton :action="fetchMore" title="Load more" />
+        </div>
+        <div class="loadmore-row" v-if="data.length === 0">
+            Not found. Try change filter.
         </div>
     </div>
 </template>
@@ -89,6 +92,7 @@ table {
 }
 .loadmore-row {
     width: 100%;
+    padding-top: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
