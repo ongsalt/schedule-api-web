@@ -29,7 +29,11 @@ const filter = reactive({
     text: "Filter"
 })
 
-const { data, error, refresh } = $client.schedule.list.useQuery()
+const data = ref(
+    await $client.schedule.list.query()
+)
+
+const fetchedScheduleAmount = computed(() => data.value.length)
 
 const keyMeta = new Map<keyof typeof selected.value, KeyMeta>([
     ["day", {
@@ -78,6 +82,15 @@ const keyMeta = new Map<keyof typeof selected.value, KeyMeta>([
         }
     }]
 ])
+
+async function fetchMoreData() {
+    const newData = await $client.schedule.list.query(fetchedScheduleAmount.value)
+    data.value = [...data.value, ...newData]
+}
+
+async function refresh() {
+    data.value = await $client.schedule.list.query()
+}
 
 function onEdit(target: Schedule) {
     selected.value = structuredClone(toRaw(target))
@@ -198,7 +211,7 @@ definePageMeta({
     </div>
 
     <Table :data="data" :key-meta="keyMeta" :edit-builder="(it) => () => onEdit(it)"
-        :remove-builder="(it) => () => onBeforeDelete(it)" />
+        :remove-builder="(it) => () => onBeforeDelete(it)" :fetch-more="fetchMoreData" />
 </template>
 
 

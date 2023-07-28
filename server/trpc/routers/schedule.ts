@@ -22,10 +22,10 @@ export const scheduleRouter = router({
     })).mutation(async ({ input }) => {
         return await deleteSchedule(input.forYear, input.forRoom, input.day, input.period)
     }),
-    list: publicProcedure.query(async () => {
+    list: publicProcedure.input(z.number().default(0)).query(async ({ input }) => {
         return await getSchedulesByFilter({
-            take: 10,
-            start: 0
+            take: 20,
+            start: input
         })
     }),
     search: publicProcedure.input(ZScheduleFilter).query(async ({ input }) => {
