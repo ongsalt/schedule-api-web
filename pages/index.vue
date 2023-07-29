@@ -47,6 +47,9 @@ const onUpdateClassTarget = async () => {
       <h4 class="mb-16">
         <input type="text" class="inline light" v-model="classTarget" @change="onUpdateClassTarget">
       </h4>
+      <h2>
+        Gaythai
+      </h2>
       <h1 class="mb-32"> It's been a long day </h1>
       <p class="secondary mb-32"> Trick: just skip the class </p>
     </section>
