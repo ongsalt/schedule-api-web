@@ -4,7 +4,7 @@
             <h2 class="mb-16">
                 About
             </h2>
-            <p> I rebuilt this because the previous one is shit </p>
+            <p> I rebuilt this project because React is shit. </p>
         </section>
     </div>
 </template>

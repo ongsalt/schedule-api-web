@@ -34,6 +34,18 @@ export const scheduleRouter = router({
         // console.log(input)
         return await getSchedulesByFilter(input)
     }),
+    table: publicProcedure.input(z.object({
+        forYear: z.number(),
+        forClass: z.number(),
+    })).query(async ({ input }) => {
+        // console.log(input)
+        return await getSchedulesByFilter({
+            take: 10 * 7,
+            start: 0,
+            forRoom: input.forClass,
+            forYear: input.forYear,
+        })
+    }),
     getRecommend: publicProcedure.input(z.object({
         forYear: z.number(),
         forClass: z.number(),

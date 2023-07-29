@@ -20,5 +20,5 @@ export function formatSchedule(pool: Schedule[]): (Schedule | undefined)[][] {
 }
 
 export function formatRange(times: Time[]): string {
-    return `${times[0].hour}:${times[0].minute} - ${times[1].hour}:${times[1].minute}`
+    return `${times[0].hour}:${times[0].minute.toLocaleString('en-US', { minimumIntegerDigits: 2 })} - ${times[1].hour}:${times[1].minute.toLocaleString('en-US', { minimumIntegerDigits: 2 })}`
 }

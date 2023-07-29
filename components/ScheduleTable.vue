@@ -56,5 +56,8 @@ const boundaries = getTimeBoundary(period, timePerPeriod)
     border-radius: 8px;
     border: 1px solid var(--color-border);
     width: 100%;
+    table-layout: fixed;
 }
+
+
 </style>

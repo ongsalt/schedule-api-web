@@ -37,11 +37,11 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --color-accent: #febf4c;
-        --color-accent100: #FEF5E7;
-        --color-accent300: #FCE7C5;
-        --color-accent500: #F9CB80;
+        --color-accent100: #6f4501;
+        --color-accent300: #7e4f03;
+        --color-accent500: #B97509;
         --color-accent600: #f2a832;
-        --color-accent700: #B97509;
+        --color-accent700: #F9CB80;
 
         --color-text: #bdbdbd;
         --color-text-heading: #e3e3e3;

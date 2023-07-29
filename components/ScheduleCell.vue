@@ -6,7 +6,7 @@
         <p class="pm-0 secondary"> {{ room }} </p>
     </div>
     <div v-else>
-        <p class="pm-0"> No data </p>
+        <p class="pm-0"> ว่าง </p>
     </div>
 </template>
 
@@ -19,11 +19,15 @@ const { schedule } = defineProps<{ schedule?: Schedule }>()
 
 const code = schedule?.subject.code
 const name = schedule?.subject.name
-const teacher = schedule?.subject.teachers.flatMap(it => [it.name, it.name, it.name, it.name, it.name, it.name]).join(" ")
+const teacher = schedule?.subject.teachers.map(it => it.name).join(" ")
 const room = schedule?.room
 
 </script>
 
 <style scoped>
-
+.name,
+.teacher,
+.secondary {
+    /* width: fit-content; */
+}
 </style>

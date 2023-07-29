@@ -164,7 +164,7 @@ button {
 
   font-weight: 600;
   font-size: 14px;
-  color: white;
+  color: var(--color-bg);
 
   transition: background-color .4s;
   cursor: pointer;

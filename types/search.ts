@@ -13,7 +13,10 @@ export class FilterArgument {
         argument?: Map<keyof ScheduleFilter | "for", any>
     ) {
         this.argument = argument ?? new Map()
-        this.scheduleFilter = {}
+        this.scheduleFilter = {
+            start: 0,
+            take: 999
+        }
     }
 
     static parse(str: string): FilterArgument {
@@ -31,6 +34,14 @@ export class FilterArgument {
     }
 
     set(target: keyof ScheduleFilter | "for", value: any): Result<true> {
+        this.argument.set(target, value)
+        return this.updateScheduleFilter(target, value)
+    }
+
+    setIfUndefined(target: keyof ScheduleFilter | "for", value: any): Result<true> {
+        if (this.argument.has(target)) {
+            return Err(`already set ${target}: ${this.argument.get(target)}`)
+        }
         this.argument.set(target, value)
         return this.updateScheduleFilter(target, value)
     }
@@ -71,6 +82,7 @@ export class FilterArgument {
             return Err("This field must be string")
         }
         
+        // @ts-ignore
         this.scheduleFilter[target] = value
 
         return Ok(true)

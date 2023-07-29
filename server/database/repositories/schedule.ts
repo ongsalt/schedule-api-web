@@ -18,10 +18,9 @@ export async function getSchedulesByFilter(input: ScheduleFilter) {
 
     if (input.subjectCode || input.subjectName || input.teacherName) {
         query.subject = {}
-        if (input.subjectCode) query.subject.code = input.subjectCode
-        if (input.subjectName) query.subject.name = input.subjectName
-
-        if (input.teacherName) query.subject.teacher = input.subjectCode
+        if (input.subjectCode) query.subject.code = { contains: input.subjectCode } 
+        if (input.subjectName) query.subject.name = { contains: input.subjectName }
+        if (input.teacherName) query.subject.teacher = { contains: input.subjectCode }
     }
     return await prisma.schedule.findMany({
         where: query,

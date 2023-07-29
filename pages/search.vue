@@ -46,9 +46,9 @@ const onInput = (event: any, command: SearchCommand) => {
   const value: string = event.target.innerText
   const res = filterArguments.value.set(command.key, value)
   if (res.ok) {
-    // console.log(`OK  set ${command.key} ${value}`)
+    console.log(`OK  set ${command.key} ${value}`)
   } else {
-    // console.log(`Err set${command.key} ${value}: ${res.reason}`)
+    console.log(`Err set${command.key} ${value}: ${res.reason}`)
   }
 }
 
@@ -62,7 +62,7 @@ const onSearch = async () => {
   // console.log(schedules.value)
   isLoading.value = false
 
-  // console.log(filter)
+  console.log(filter)
 }
 
 const loadPreviousSearch = () => {
@@ -105,7 +105,7 @@ onMounted(() => {
       <h1 class="mb-32 "> Search </h1>
       <div class="filter-list">
         <div class="filter" v-for="command, i in commands" :class="{ disabled: !filterArguments.has(command.key) }">
-          <h2 @click="filterArguments.set(command.key, command.defualt)"> {{ command.text }}
+          <h2 @click="filterArguments.setIfUndefined(command.key, command.defualt)"> {{ command.text }}
             <span class="highlight" contenteditable @input="event => onInput(event, command)"> {{ command.defualt }}
             </span>
           </h2>

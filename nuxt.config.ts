@@ -36,6 +36,14 @@ export default defineNuxtConfig({
     },
     vue: {
         defineModel: true
+    },
+    routeRules: {
+        '/': {
+            ssr: false
+        },
+        '/schedule': {
+            ssr: false
+        }
     }
 
 })
