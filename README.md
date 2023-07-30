@@ -1,6 +1,6 @@
 ## Setup
 
-### Check out for docker compose.
+### Check out [this](https://github.com/ongsalt/schedule-api-v2) for docker compose.
 
 Make sure to install the dependencies:
 
