@@ -4,11 +4,9 @@ WORKDIR /usr/src/app
 
 COPY . .
 RUN npm install
-ENV DATABASE_URL=file:./dev.db
+ENV DATABASE_URL="postgresql://postgres:Gaythai@postgres/schedule-api-v2"
 ENV AUTH_SECRET="TeeTuanmuan"
 RUN npm run build
-# CMD [ "node", ".output/server/index.mjs" ]
-CMD [ "npm", "run", "dev" ]
-# RUN npm run dev
+CMD [ "node", ".output/server/index.mjs" ]
 EXPOSE 3000
 EXPOSE 5555
