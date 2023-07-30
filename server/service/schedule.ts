@@ -57,13 +57,13 @@ export async function getCurrentSchedule(forYear: number, forClass: number): Pro
 
         return Ok({
             day: day,
-            period: day,
-            forRoom: s.forRoom,
-            forYear: s.forYear,
+            period: period,
+            // forRoom: s.forRoom,
+            // forYear: s.forYear,
             link: s.subject.link ?? undefined,
             location: "Current",
             room: s.room ?? undefined,
-            subjectCode: s.subject.code,
+            subjectCode: s.subject.code ?? undefined,
             subjectName: s.subject.name,
             teachers: s.subject.teachers.map(it => it.name)
         })
@@ -135,7 +135,7 @@ export async function getRecommendation(forYear: number, forClass: number): Prom
             location: getPeriodLocation(it.day, it.period, period),
             period: it.period,
             subjectName: it.subject.name,
-            subjectCode: it.subject.code,
+            subjectCode: it.subject.code ?? "",
             teacherName: it.subject.teachers.map(it => it.name).join(", "),
             room: it.room ?? ""
         }
