@@ -7,4 +7,5 @@ export type APISchedule = {
     teachers: string[],
     day: number,
     period: number,
+    isInSchoolTime: boolean,
 }
