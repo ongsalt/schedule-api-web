@@ -9,4 +9,3 @@ ENV AUTH_SECRET="TeeTuanmuan"
 RUN npm run build
 CMD [ "node", ".output/server/index.mjs" ]
 EXPOSE 3000
-EXPOSE 5555
