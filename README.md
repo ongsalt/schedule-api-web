@@ -1,6 +1,6 @@
-## Setup
+## Check out [this](https://github.com/ongsalt/schedule-api-v2) for the rest of the project.
 
-### Check out [this](https://github.com/ongsalt/schedule-api-v2) for docker compose.
+## Setup
 
 Make sure to install the dependencies:
 
@@ -15,30 +15,14 @@ npm install
 pnpm install
 ```
 
-then set up postgres db and change the connection string in .env
-
 ## Development Server
 
-Start the development server on `http://localhost:3000`
+Edit database url in `.env` file and Start the development server on `http://localhost:3000`
 
 ```bash
 npm run dev
 ```
 
-Just THIS
+### I highly recommend to setup using [docker compose](https://github.com/ongsalt/schedule-api-v2) instead.
 
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Check out the [Nuxt docs](https://nuxt.com/docs/getting-started/deployment) for more information.
