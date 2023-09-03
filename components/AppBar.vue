@@ -13,7 +13,7 @@ const isShow = ref(false)
         <NuxtLink href="/">
             <div class="horizontal">
                 <img src="/favicon.ico" alt="Logo" class="logo">
-                <h3 style="color: var(--color-text);" class="app-title"> Yomum </h3>
+                <h3 style="color: var(--color-text);" class="app-title"> ScheduleAPI </h3>
             </div>
         </NuxtLink>
         <div class="center">
